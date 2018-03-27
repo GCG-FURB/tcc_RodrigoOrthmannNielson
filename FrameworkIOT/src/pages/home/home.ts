@@ -1,5 +1,7 @@
+import { DispositivoBluetooth } from './../../framework/DispositivoBluetooth';
+import { FwBluetoothProvider } from './../../providers/fw-bluetooth/fw-bluetooth';
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, Platform } from 'ionic-angular';
 
 @Component({
   selector: 'page-home',
@@ -7,8 +9,25 @@ import { NavController } from 'ionic-angular';
 })
 export class HomePage {
 
-  constructor(public navCtrl: NavController) {
+  public listaDispositivosPareados: Array<DispositivoBluetooth>;
+  //listaDispositivosNaoPareados: Array<DispositivoBluetooth>;
 
+  constructor(private platform: Platform, public navCtrl: NavController, private fwBluetooth: FwBluetoothProvider) {
+    this.platform.ready().then(() => fwBluetooth.ativarBluetooth());
   }
 
+  listarDispositivosPareados(): void {
+    this.fwBluetooth.listarDispositivosPareados()
+      .then((dispositivos) => this.listaDispositivosPareados = dispositivos);
+  }
+
+  listarDispositivosNaoPareados(): void {
+    //listaDis
+  }
+
+  pressionado(dispositivo: DispositivoBluetooth) {
+    alert(dispositivo.Nome);
+  }
 }
+
+

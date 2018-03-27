@@ -1,1 +1,21 @@
-<ion-nav [root]="rootPage"></ion-nav>
+<ion-menu [content]="conteudo">
+
+    <ion-header>
+        <ion-toolbar>
+            <ion-title>Menu</ion-title>
+        </ion-toolbar>
+    </ion-header>
+
+    <ion-content>
+        <ion-list>
+            <button ion-item *ngFor="let p of paginas" (click)="abrirPagina(p)" menuClose>
+                {{ p.titulo }}                
+            </button>
+        </ion-list>
+
+    </ion-content>
+
+</ion-menu>
+
+
+<ion-nav #conteudo [root]="rootPage"></ion-nav>

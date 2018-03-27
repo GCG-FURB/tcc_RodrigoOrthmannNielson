@@ -8,15 +8,18 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { BluetoothSerial } from '@ionic-native/bluetooth-serial';
 
 // Componentes
+import { CabecalhoCustomizadoComponent } from './../components/cabecalho-customizado/cabecalho-customizado';
 import { MyApp } from './app.component';
 
 // Pages
+import { FwBluetoothProvider } from '../providers/fw-bluetooth/fw-bluetooth';
 import { HomePage } from '../pages/home/home';
 
 @NgModule({
   declarations: [
     MyApp,
-    HomePage
+    HomePage,
+    CabecalhoCustomizadoComponent
   ],
   imports: [
     BrowserModule,
@@ -31,7 +34,8 @@ import { HomePage } from '../pages/home/home';
     BluetoothSerial,
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    FwBluetoothProvider
   ]
 })
 export class AppModule {}
