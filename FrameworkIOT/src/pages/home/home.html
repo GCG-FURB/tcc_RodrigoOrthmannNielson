@@ -3,11 +3,26 @@
 </ion-header>
 
 <ion-content padding>
-  <button ion-button (click)="listarDispositivosPareados()">Click me</button>
+  <button ion-button (click)="listarDispositivosPareados()">Listar dispositivos pareados</button>
 
   <ion-list padding>
-    <button ion-item *ngFor="let dispositivo of listaDispositivosPareados" (press)="pressionado(dispositivo)">
+    <button ion-item *ngFor="let dispositivo of listaDispositivosPareados" 
+      (press)="pressionado(dispositivo)"
+      (click)="conectar(dispositivo)">
       {{ dispositivo.Nome }}
     </button>
   </ion-list>
+
+  <button ion-button (click)="listarDispositivosNaoPareados()">Listar dispositivos não pareados</button>
+
+  <ion-list padding>
+    <button ion-item *ngFor="let dispositivoNaoPareado of listaDispositivosNaoPareados" (press)="pressionado(dispositivoNaoPareado)">
+      {{ dispositivoNaoPareado.Nome }}
+    </button>
+  </ion-list>
+
+  <p *ngIf="conectado != null"> {{ conectado.Nome }}</p>
+
+  <button ion-button (click)="testeMQTT()">Conectar MQTT</button>
+  <button ion-button color="secondary" (click)="publicarMqtt()">Publicar mqtt</button>
 </ion-content>

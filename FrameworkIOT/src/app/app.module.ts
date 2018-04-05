@@ -14,6 +14,7 @@ import { MyApp } from './app.component';
 // Pages
 import { FwBluetoothProvider } from '../providers/fw-bluetooth/fw-bluetooth';
 import { HomePage } from '../pages/home/home';
+import { FwMqttProvider } from '../providers/fw-mqtt/fw-mqtt';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { HomePage } from '../pages/home/home';
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    FwBluetoothProvider
+    FwBluetoothProvider,
+    FwMqttProvider
   ]
 })
 export class AppModule {}

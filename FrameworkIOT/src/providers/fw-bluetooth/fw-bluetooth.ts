@@ -4,7 +4,7 @@ import { AlertController, Platform } from 'ionic-angular';
 // Ionic native
 import { BluetoothSerial } from '@ionic-native/bluetooth-serial';
 
-import { DispositivoBluetooth } from './../../framework/DispositivoBluetooth';
+import { DispositivoBluetooth } from './../../framework/dispositivoBluetooth';
 
 @Injectable()
 export class FwBluetoothProvider {
@@ -28,6 +28,10 @@ export class FwBluetoothProvider {
     this.bluetoothSerial.enable()
       .then(() => console.log('Bluetooth ativado'))
       .catch((err) => alert(err));
+  }
+
+  conectarDispositivo(enderecoMac: string) {
+    this.bluetoothSerial.connect(enderecoMac).subscribe();
   }
 
   /**
@@ -58,12 +62,12 @@ export class FwBluetoothProvider {
     return new Promise((resolve, reject) => {
       this.bluetoothSerial.discoverUnpaired()
         .then((dispositivos) => {
+          alert(dispositivos);
           dispositivos.forEach(d => {
             this.dispositivosNaoPareados.push(new DispositivoBluetooth(d.name, d.address, d.id));
           });
           resolve(this.dispositivosNaoPareados);
-        }
-        );
+        });
       (err) => {
         reject();
       };

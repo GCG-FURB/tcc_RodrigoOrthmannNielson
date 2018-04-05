@@ -27,10 +27,6 @@ export class MyApp {
     });
   }
 
-  ngAfterViewInit(): void {
-    this.menuCtrl.open();
-  }
-
   abrirPagina(page: { title: string, component: any }): void {
     this.nav.setRoot(page.component);
   }
