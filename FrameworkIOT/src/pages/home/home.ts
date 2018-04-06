@@ -44,6 +44,10 @@ export class HomePage {
     this.fwMQTT.publicar();
   }
 
+  inscreverMqtt() {
+    this.fwMQTT.inscrever();
+  }
+
 }
 
 

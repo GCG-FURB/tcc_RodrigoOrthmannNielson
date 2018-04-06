@@ -7,55 +7,64 @@ import { Paho } from 'ng2-mqtt/mqttws31'
 export class FwMqttProvider {
 
   private Configuracao: ConfiguracaoMQTT;
+  private Cliente: Paho.MQTT.Client;
 
   constructor() {
   }
 
+
+  //#region Métodos de retorno MQTT
+
   conexaoPerdida(message) {
-    console.log(message);
+    console.log('Conexão perdida. ', message);
   }
 
   mensagemRecebida(message) {
-    console.log(message);
+    console.log(message.payloadString);
   }
 
+  onConnect() {
+    console.log('Conectado ao MQTT func');
+  }
+
+  doFail(e) {
+    console.log('Falha ao conectar func')
+  }
+
+  conectouComSucesso() {
+    console.log('Conectado ao MQTT');
+  }
+
+  falhaAoConectar() {
+    console.log('Falha ao conectar')
+  }
+
+
+  //#endregion
+
   configurarMQTT(hostname: string, porta: number, caminho: string) {
-    let cliente = new Paho.MQTT.Client('m13.cloudmqtt.com', 36956, '123');
+    this.Cliente = new Paho.MQTT.Client('m13.cloudmqtt.com', 36956, '123');
 
-    cliente.onConnectionLost = this.conexaoPerdida;
-    cliente.onMessageArrived = this.mensagemRecebida;
-
+    this.Cliente.onConnectionLost = this.conexaoPerdida;
+    this.Cliente.onMessageArrived = this.mensagemRecebida;
     var options = {
       useSSL: true,
       userName: "ssjuptjm",
       password: "ILeD0JPvmVFO",
-      onSuccess: onConnect,
-      onFailure: doFail
+      onSuccess: this.conectouComSucesso,
+      onFailure: this.falhaAoConectar
     }
-
-    cliente.connect(options);
-
-    function onConnect() {
-      // Once a connection has been made, make a subscription and send a message.
-      console.log("onConnect");
-      //cliente.subscribe("/cloudmqtt");
-      var message = new Paho.MQTT.Message("Hello CloudMQTT");
-      message.destinationName = "/cloudmqtt";
-      cliente.send(message);
-    }
-
-    function doFail(e) {
-      console.log(e);
-    }
+    this.Cliente.connect(options);
   }
-  
+
   publicar() {
-    console.log('123');
+    var message = new Paho.MQTT.Message("Olá");
+    message.destinationName = "/teste";
+    this.Cliente.send(message);
   }
 
   inscrever() {
-    console.log('123');
+    this.Cliente.subscribe('/teste', '');
   }
-
 
 }
