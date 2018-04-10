@@ -1,3 +1,4 @@
+import { ConfiguracaoMQTT } from './../../framework/configuracaoMQTT';
 import { FwMqttProvider } from './../../providers/fw-mqtt/fw-mqtt';
 import { DispositivoBluetooth } from './../../framework/dispositivoBluetooth';
 import { FwBluetoothProvider } from './../../providers/fw-bluetooth/fw-bluetooth';
@@ -37,15 +38,35 @@ export class HomePage {
   }
 
   testeMQTT() {
-    this.fwMQTT.configurarMQTT('m13.cloudmqtt.com', 36956, '/TesteMQTT');
+    let conectou = (): void => {
+      console.log('COnseguiu conectarrr');
+    }
+
+    let configuracao: ConfiguracaoMQTT = {
+      hostname: 'm13.cloudmqtt.com',
+      porta: 36956,
+      idCliente: '123',
+      conectou: conectou,
+      configuracaoAutenticacao: {
+        usuario: "ssjuptjm",
+        senha: "ILeD0JPvmVFO"
+      }
+    };
+
+    this.fwMQTT.configurarMQTT(configuracao);
   }
 
+
   publicarMqtt() {
-    this.fwMQTT.publicar();
+    this.fwMQTT.publicar('oioi', '/teste');
   }
 
   inscreverMqtt() {
-    this.fwMQTT.inscrever();
+    this.fwMQTT.inscrever('/teste');
+  }
+
+  desinscreverMqtt() {
+    this.fwMQTT.desinscrever('/teste');
   }
 
 }

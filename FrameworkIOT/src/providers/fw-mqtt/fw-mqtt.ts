@@ -1,3 +1,5 @@
+import { OpcoesConexaoMQTT } from './../../framework/opcoesConexaoMQTT';
+import { ConfiguracaoAutenticacaoMQTT } from './../../framework/configuracaoAutenticacaoMQTT';
 import { ConfiguracaoMQTT } from './../../framework/configuracaoMQTT';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
@@ -9,62 +11,111 @@ export class FwMqttProvider {
   private Configuracao: ConfiguracaoMQTT;
   private Cliente: Paho.MQTT.Client;
 
-  constructor() {
-  }
+  constructor() { }
 
 
-  //#region Métodos de retorno MQTT
-
-  conexaoPerdida(message) {
+  //#region Métodos padrão de retorno MQTT
+  private conexaoPerdida(message) {
     console.log('Conexão perdida. ', message);
   }
 
-  mensagemRecebida(message) {
+  private mensagemRecebida(message) {
     console.log(message.payloadString);
   }
 
-  onConnect() {
-    console.log('Conectado ao MQTT func');
-  }
-
-  doFail(e) {
-    console.log('Falha ao conectar func')
-  }
-
-  conectouComSucesso() {
+  private conectouComSucesso() {
     console.log('Conectado ao MQTT');
   }
 
-  falhaAoConectar() {
+  private naoConectou(falha) {
     console.log('Falha ao conectar')
   }
-
-
   //#endregion
 
-  configurarMQTT(hostname: string, porta: number, caminho: string) {
-    this.Cliente = new Paho.MQTT.Client('m13.cloudmqtt.com', 36956, '123');
-
+  /**
+   * Configura e conecta à um broker MQTT
+   * @param configuracao Objetos com configuração do MQTT
+   */
+  public configurarMQTT(configuracao: ConfiguracaoMQTT) {
+    this.Cliente = new Paho.MQTT.Client(configuracao.hostname, configuracao.porta, configuracao.idCliente);
     this.Cliente.onConnectionLost = this.conexaoPerdida;
-    this.Cliente.onMessageArrived = this.mensagemRecebida;
-    var options = {
-      useSSL: true,
-      userName: "ssjuptjm",
-      password: "ILeD0JPvmVFO",
-      onSuccess: this.conectouComSucesso,
-      onFailure: this.falhaAoConectar
+    this.Cliente.onMessageArrived = configuracao.mensagemRecebida != null ? configuracao.mensagemRecebida : this.mensagemRecebida;
+    this.conectarCliente({
+      configuracaoAutenticacao: configuracao.configuracaoAutenticacao,
+      conectou: configuracao.conectou,
+      naoConectou: configuracao.naoConectou
+    });
+  }
+
+  /**
+   * Se desconecta de um cliente MQTT
+   */
+  public desconectar() {
+    this.Cliente.disconnect();
+  }
+
+  /**
+   * Valida se um cliente está conectado
+   */
+  public clienteConectado(): boolean {
+    return this.Cliente == null? false : this.Cliente.isConnected();
+  }
+
+  /**
+   * Conecta ao cliente MQTT, possibilitando o uso de opções
+   * @param opcoesConexao Opções da conexão MQTT (autenticação, funções de sucesso e falha)
+   */
+  private conectarCliente(opcoesConexao: OpcoesConexaoMQTT): void {
+    if (opcoesConexao.configuracaoAutenticacao != undefined) {
+      let options = {
+        useSSL: true,
+        userName: opcoesConexao.configuracaoAutenticacao.usuario,
+        password: opcoesConexao.configuracaoAutenticacao.senha,
+        onSuccess: opcoesConexao.conectou != undefined ? opcoesConexao.conectou : this.conectouComSucesso,
+        onFailure: opcoesConexao.naoConectou != undefined ? opcoesConexao.naoConectou : this.naoConectou
+      }
+      this.Cliente.connect(options);
+    } else {
+      let options = {
+        onSuccess: opcoesConexao.conectou != undefined ? opcoesConexao.conectou : this.conectouComSucesso,
+        onFailure: opcoesConexao.naoConectou != undefined ? opcoesConexao.naoConectou : this.naoConectou
+      }
+      this.Cliente.connect(options);
     }
-    this.Cliente.connect(options);
   }
 
-  publicar() {
-    var message = new Paho.MQTT.Message("Olá");
-    message.destinationName = "/teste";
-    this.Cliente.send(message);
+  /**
+   * Publica uma mensagem à um tópico MQTT
+   * @param mensagem Mensagem a ser publicada
+   * @param topico Tópico em que será publicada a mensagem
+   * @param qos QOS, valores devem ser entre 0 e 2
+   */
+  public publicar(mensagem: string, topico: string, qos?: number): void {
+    if (this.Cliente != null && this.Cliente.isConnected()) {
+      let msg = new Paho.MQTT.Message(mensagem);
+      msg.destinationName = topico;
+      if (qos != null)
+        msg.qos = qos;
+      this.Cliente.send(msg);
+    }
   }
 
-  inscrever() {
-    this.Cliente.subscribe('/teste', '');
+  /**
+   * Se inscreve em um tópico
+   * @param topico Tópico a se inscrever
+   * @param opcoesInscricao Opções adicionais para inscrição
+   */
+  public inscrever(topico: string, opcoesInscricao?: object) {
+    this.Cliente.subscribe(topico, opcoesInscricao);
+  }
+
+  /**
+   * Se desinscreve de um tópico
+   * @param topico Tópico a se desinscrever
+   * @param opcoesDesinscricao Opções adicionais para inscrição
+   */
+  public desinscrever(topico: string, opcoesDesisncricao?: object) {
+    this.Cliente.unsubscribe(topico, opcoesDesisncricao)    
   }
 
 }
