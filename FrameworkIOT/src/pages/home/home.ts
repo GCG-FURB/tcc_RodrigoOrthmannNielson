@@ -1,9 +1,11 @@
+import { FwComunicacaoProvider } from './../../providers/fw-comunicacao/fw-comunicacao';
 import { ConfiguracaoMQTT } from './../../framework/configuracaoMQTT';
 import { FwMqttProvider } from './../../providers/fw-mqtt/fw-mqtt';
-import { DispositivoBluetooth } from './../../framework/dispositivoBluetooth';
+import { DispositivoBluetooth } from './../../framework/dispositivo/dispositivoBluetooth';
 import { FwBluetoothProvider } from './../../providers/fw-bluetooth/fw-bluetooth';
 import { Component } from '@angular/core';
 import { NavController, Platform } from 'ionic-angular';
+import { Paho } from 'ng2-mqtt/mqttws31';
 
 @Component({
   selector: 'page-home',
@@ -15,17 +17,17 @@ export class HomePage {
   public listaDispositivosNaoPareados: Array<DispositivoBluetooth>;
   public conectado: DispositivoBluetooth;
 
-  constructor(private platform: Platform, public navCtrl: NavController, private fwBluetooth: FwBluetoothProvider, private fwMQTT: FwMqttProvider) {
-    this.platform.ready().then(() => fwBluetooth.ativarBluetooth());
+  constructor(private fwComunicacao: FwComunicacaoProvider) {
+    //this.platform.ready().then(() => fwBluetooth.ativarBluetooth());
   }
 
   listarDispositivosPareados(): void {
-    this.fwBluetooth.listarDispositivosPareados()
+    this.fwComunicacao.fwBluetooth.listarDispositivosPareados()
       .then((dispositivos) => this.listaDispositivosPareados = dispositivos);
   }
 
   listarDispositivosNaoPareados(): void {
-    this.fwBluetooth.listarDispositivosNaoPareados()
+    this.fwComunicacao.fwBluetooth.listarDispositivosNaoPareados()
       .then((dispositivos) => this.listaDispositivosNaoPareados = dispositivos);
   }
 
@@ -34,12 +36,19 @@ export class HomePage {
   }
 
   conectar(dispositivo: DispositivoBluetooth) {
-    this.fwBluetooth.conectarDispositivo(dispositivo.EnderecoMAC);
+    this.fwComunicacao.fwBluetooth.conectarDispositivo(dispositivo.EnderecoMAC);
   }
+
+  public checado: boolean = true;
 
   testeMQTT() {
     let conectou = (): void => {
       console.log('COnseguiu conectarrr');
+    }
+
+    let mensagemRecebida = (mensagem: Paho.MQTT.Message): void => {
+      console.log('Recebida mensagem! ' + mensagem.payloadString);
+      this.checado = !this.checado;
     }
 
     let configuracao: ConfiguracaoMQTT = {
@@ -47,27 +56,30 @@ export class HomePage {
       porta: 36956,
       idCliente: '123',
       conectou: conectou,
+      mensagemRecebida: mensagemRecebida,
       configuracaoAutenticacao: {
         usuario: "ssjuptjm",
         senha: "ILeD0JPvmVFO"
       }
     };
 
-    this.fwMQTT.configurarMQTT(configuracao);
+    this.fwComunicacao.fwMQTT.configurarMQTT(configuracao);
   }
 
 
   publicarMqtt() {
-    this.fwMQTT.publicar('oioi', '/teste');
+    this.fwComunicacao.fwMQTT.publicar('oioi', '/teste');
   }
 
   inscreverMqtt() {
-    this.fwMQTT.inscrever('/teste');
+    this.fwComunicacao.fwMQTT.inscrever('/teste');
   }
 
   desinscreverMqtt() {
-    this.fwMQTT.desinscrever('/teste');
+    this.fwComunicacao.fwMQTT.desinscrever('/teste');
   }
+
+
 
 }
 

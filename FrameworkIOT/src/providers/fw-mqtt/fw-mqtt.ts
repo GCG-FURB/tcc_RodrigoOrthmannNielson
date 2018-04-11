@@ -2,17 +2,14 @@ import { OpcoesConexaoMQTT } from './../../framework/opcoesConexaoMQTT';
 import { ConfiguracaoAutenticacaoMQTT } from './../../framework/configuracaoAutenticacaoMQTT';
 import { ConfiguracaoMQTT } from './../../framework/configuracaoMQTT';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
 import { Paho } from 'ng2-mqtt/mqttws31'
 
 @Injectable()
 export class FwMqttProvider {
 
-  private Configuracao: ConfiguracaoMQTT;
   private Cliente: Paho.MQTT.Client;
 
   constructor() { }
-
 
   //#region Métodos padrão de retorno MQTT
   private conexaoPerdida(message) {
