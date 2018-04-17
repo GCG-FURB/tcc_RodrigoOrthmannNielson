@@ -6,16 +6,11 @@ import { DispositivoBluetooth } from './../../framework/dispositivo/dispositivoB
 @Injectable()
 export class FwBluetoothProvider {
 
-  private dispositivosPareados: Array<DispositivoBluetooth>;
-  private dispositivosNaoPareados: Array<DispositivoBluetooth>
-
   constructor(
     private platform: Platform,
     private bluetoothSerial: BluetoothSerial,
     private alertCtrl: AlertController
   ) {
-    this.dispositivosPareados = new Array<DispositivoBluetooth>();
-    this.dispositivosNaoPareados = new Array<DispositivoBluetooth>();
   }
 
   /**
@@ -27,8 +22,29 @@ export class FwBluetoothProvider {
       .catch((err) => alert(err));
   }
 
+  dispositivoConectado() {
+    this.bluetoothSerial.isConnected()
+      .then((msg) => alert(msg))
+      .catch(err => alert(err));
+  }
+
   conectarDispositivo(enderecoMac: string) {
     this.bluetoothSerial.connect(enderecoMac).subscribe();
+  }
+
+  enviarMensagem(mensagem: string) {
+    if (mensagem == "0") {
+      this.bluetoothSerial.write(mensagem.toString()).then((success) => alert(success)).catch((err) => alert(err));
+    } else {
+      this.bluetoothSerial.write(mensagem.toString()).then((success) => alert(success)).catch((err) => alert(err));
+    }
+    // if (mensagem.length == 1) {
+    //   let numero = +mensagem;
+    //   this.bluetoothSerial.write(numero).then((success) => alert(success)).catch((err) => alert(err));
+    // } else {
+    //   alert(mensagem);
+    //   this.bluetoothSerial.write(mensagem).then((success) => alert(success)).catch((err) => alert(err));
+    // }
   }
 
   /**
@@ -39,10 +55,11 @@ export class FwBluetoothProvider {
     return new Promise((resolve, reject) => {
       this.bluetoothSerial.list().then(
         (dispositivos) => {
+          let dispositivosPareados: Array<DispositivoBluetooth> = new Array<DispositivoBluetooth>();
           dispositivos.forEach(d => {
-            this.dispositivosPareados.push(new DispositivoBluetooth(d.name, d.address, d.id));
+            dispositivosPareados.push(new DispositivoBluetooth(d.name, d.address, d.id));
           });
-          resolve(this.dispositivosPareados);
+          resolve(dispositivosPareados);
         }
       );
       (err) => {
@@ -59,11 +76,11 @@ export class FwBluetoothProvider {
     return new Promise((resolve, reject) => {
       this.bluetoothSerial.discoverUnpaired()
         .then((dispositivos) => {
-          alert(dispositivos);
+          let dispositivosNaoPareados: Array<DispositivoBluetooth> = new Array<DispositivoBluetooth>();
           dispositivos.forEach(d => {
-            this.dispositivosNaoPareados.push(new DispositivoBluetooth(d.name, d.address, d.id));
+            dispositivosNaoPareados.push(new DispositivoBluetooth(d.name, d.address, d.id));
           });
-          resolve(this.dispositivosNaoPareados);
+          resolve(dispositivosNaoPareados);
         });
       (err) => {
         reject();

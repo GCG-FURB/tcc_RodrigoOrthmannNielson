@@ -23,6 +23,10 @@
 
   <p *ngIf="conectado != null"> {{ conectado.Nome }}</p>
 
+  <button ion-button (click)="enviarMsg(0)">OFF</button>
+  <button ion-button (click)="enviarMsg(1)">ON</button>
+  <button ion-button (click)="conectadoDisp()">CONECTADO????</button>
+
   <button ion-button (click)="testeMQTT()">Conectar MQTT</button>
   <button ion-button color="secondary" (click)="publicarMqtt()">Publicar mqtt</button>
   <button ion-button color="dark" (click)="inscreverMqtt()">Inscrever mqtt</button>
@@ -30,6 +34,6 @@
 
   <ion-item>
     <ion-label>Teste</ion-label>
-    <ion-toggle color="red" [checked]="checado"></ion-toggle>
+    <ion-toggle color="red" [checked]="checado" (ionChange)="changeTeste($event)"></ion-toggle>
   </ion-item>
 </ion-content>

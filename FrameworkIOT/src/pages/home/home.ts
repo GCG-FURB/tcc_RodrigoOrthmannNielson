@@ -4,7 +4,7 @@ import { FwMqttProvider } from './../../providers/fw-mqtt/fw-mqtt';
 import { DispositivoBluetooth } from './../../framework/dispositivo/dispositivoBluetooth';
 import { FwBluetoothProvider } from './../../providers/fw-bluetooth/fw-bluetooth';
 import { Component } from '@angular/core';
-import { NavController, Platform } from 'ionic-angular';
+import { NavController, Platform, Toggle } from 'ionic-angular';
 import { Paho } from 'ng2-mqtt/mqttws31';
 
 @Component({
@@ -16,14 +16,17 @@ export class HomePage {
   public listaDispositivosPareados: Array<DispositivoBluetooth>;
   public listaDispositivosNaoPareados: Array<DispositivoBluetooth>;
   public conectado: DispositivoBluetooth;
+  public foi: boolean = false;
 
-  constructor(private fwComunicacao: FwComunicacaoProvider) {
-    //this.platform.ready().then(() => fwBluetooth.ativarBluetooth());
+  constructor(private fwComunicacao: FwComunicacaoProvider, private fwBluetooth: FwBluetoothProvider, private platform: Platform) {
+    this.platform.ready().then(() => fwBluetooth.ativarBluetooth());
   }
 
   listarDispositivosPareados(): void {
     this.fwComunicacao.fwBluetooth.listarDispositivosPareados()
-      .then((dispositivos) => this.listaDispositivosPareados = dispositivos);
+      .then((dispositivos) => {
+        this.listaDispositivosPareados = dispositivos;
+      });
   }
 
   listarDispositivosNaoPareados(): void {
@@ -31,8 +34,31 @@ export class HomePage {
       .then((dispositivos) => this.listaDispositivosNaoPareados = dispositivos);
   }
 
+  conectadoDisp() {
+    this.fwBluetooth.dispositivoConectado();
+
+  }
+
+  changeTeste(ctl: Toggle) {
+    if (ctl.checked) {
+      this.enviarMsg('1');
+    } else {
+      this.enviarMsg('0');
+    }
+  }
+
   pressionado(dispositivo: DispositivoBluetooth) {
-    alert(dispositivo.Nome);
+    //if (this.conectado == null || this.conectado.Id != dispositivo.Id) {
+      this.fwBluetooth.conectarDispositivo(dispositivo.EnderecoMAC);
+      this.conectado = dispositivo;
+      this.fwBluetooth.dispositivoConectado();
+      this.listaDispositivosNaoPareados = null;
+    //}
+    //alert(dispositivo.Nome);
+  }
+
+  enviarMsg(msg: string){ 
+    this.fwBluetooth.enviarMensagem(msg);
   }
 
   conectar(dispositivo: DispositivoBluetooth) {
