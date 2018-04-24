@@ -14,7 +14,7 @@ export class FwBluetoothProvider {
   }
 
   /**
-   * Ativa o bluetooth do dispositivo
+   * Ativa o bluetooth do celular
    */
   ativarBluetooth() {
     this.bluetoothSerial.enable()
@@ -22,29 +22,68 @@ export class FwBluetoothProvider {
       .catch((err) => alert(err));
   }
 
-  dispositivoConectado() {
-    this.bluetoothSerial.isConnected()
-      .then((msg) => alert(msg))
-      .catch(err => alert(err));
+  /**
+   * Valida se existe algum dispositivo conectado
+   * @returns {Promise<boolean>} Promise com verdadeiro caso o dispositivo esteja conectado, falso caso contrário
+   */
+  dispositivoConectado(): Promise<boolean> {
+    return new Promise((resolve, reject) => {
+      this.bluetoothSerial.isConnected()
+        .then(msg => resolve(msg == "OK"))
+        .catch(err => reject(false));
+    });
   }
 
+  /**
+   * Conecta em um dispositivo
+   * @param enderecoMac Endereço MAC do dispositivo
+   */
   conectarDispositivo(enderecoMac: string) {
     this.bluetoothSerial.connect(enderecoMac).subscribe();
   }
 
-  enviarMensagem(mensagem: string) {
-    if (mensagem == "0") {
-      this.bluetoothSerial.write(mensagem.toString()).then((success) => alert(success)).catch((err) => alert(err));
-    } else {
-      this.bluetoothSerial.write(mensagem.toString()).then((success) => alert(success)).catch((err) => alert(err));
-    }
-    // if (mensagem.length == 1) {
-    //   let numero = +mensagem;
-    //   this.bluetoothSerial.write(numero).then((success) => alert(success)).catch((err) => alert(err));
-    // } else {
-    //   alert(mensagem);
-    //   this.bluetoothSerial.write(mensagem).then((success) => alert(success)).catch((err) => alert(err));
-    // }
+  /**
+   * Envia uma mensagem ao dispositivo conectado atualmente
+   * @param mensagem Mensagem a ser enviada
+   */
+  enviarMensagem(mensagem: string, funcaoSucesso?: () => void, funcaoErro?: () => void) {
+    this.bluetoothSerial.write(mensagem.toString())
+      .then((success) => funcaoSucesso == undefined? console.log('Enviou a mensagem com sucesso' + success) : funcaoSucesso)
+      .catch((err) => funcaoErro == undefined? console.log('Erro ao enviar mensagem' + err) : funcaoErro);
+  }
+
+  /**
+   * Conecta e envia uma mensagem à um determinado dispositivo. 
+   * @param mensagem Mensagem a ser enviada
+   * @param enderecoMac Endereço MAC do dispositivo
+   */
+  conectaEnviaMensagemDispositivo(mensagem: string, enderecoMac: string) {
+    this.bluetoothSerial.isConnected()
+      .then(msg => msg == "OK")
+      .then((conectado) => {
+        if (conectado) {
+          return this.bluetoothSerial.disconnect();
+        }
+        return new Promise((resolve) => resolve());
+      })
+      .then(msg => {
+        this.conectarEEnviarMensagemTimeout(mensagem, enderecoMac);
+      })
+      .catch(err => {
+        this.conectarEEnviarMensagemTimeout(mensagem, enderecoMac);
+      });
+  }
+
+  /**
+   * Conecta e envia uma mensagem, aplicando um timeout antes de enviar a mensagem
+   * @param mensagem Mensagem a ser enviada
+   * @param enderecoMac Endereço MAC do dispositivo
+   */
+  private conectarEEnviarMensagemTimeout(mensagem: string, enderecoMac: string) {
+    this.bluetoothSerial.connect(enderecoMac).subscribe();
+    setTimeout(() => {
+      this.enviarMensagem(mensagem);
+    }, 1000);
   }
 
   /**

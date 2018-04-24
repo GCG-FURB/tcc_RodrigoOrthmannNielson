@@ -35,7 +35,15 @@ export class HomePage {
   }
 
   conectadoDisp() {
-    this.fwBluetooth.dispositivoConectado();
+    let res = this.fwBluetooth.dispositivoConectado()
+    .then(msg => alert(msg))
+    .catch(err => alert(err));
+    
+    // if (this.fwBluetooth.dispositivoConectado()) {
+    //   alert('Conectado');
+    // } else {
+    //   alert('Desconectado');
+    // }
 
   }
 
@@ -48,24 +56,33 @@ export class HomePage {
   }
 
   pressionado(dispositivo: DispositivoBluetooth) {
+    //alert('AAAAAAAAAAAA');
+    console.log(dispositivo.EnderecoMAC);
+    this.fwBluetooth.conectaEnviaMensagemDispositivo("0", dispositivo.EnderecoMAC);
     //if (this.conectado == null || this.conectado.Id != dispositivo.Id) {
-      this.fwBluetooth.conectarDispositivo(dispositivo.EnderecoMAC);
-      this.conectado = dispositivo;
-      this.fwBluetooth.dispositivoConectado();
-      this.listaDispositivosNaoPareados = null;
+    // this.fwBluetooth.conectarDispositivo(dispositivo.EnderecoMAC);
+    // this.conectado = dispositivo;
+    // this.fwBluetooth.dispositivoConectado();
+    // this.listaDispositivosNaoPareados = null;
     //}
     //alert(dispositivo.Nome);
   }
 
-  enviarMsg(msg: string){ 
-    this.fwBluetooth.enviarMensagem(msg);
+  enviarMsg(msg: string) {
+    this.fwBluetooth.conectaEnviaMensagemDispositivo(msg, '98:D3:31:F7:35:77');
   }
 
   conectar(dispositivo: DispositivoBluetooth) {
-    this.fwComunicacao.fwBluetooth.conectarDispositivo(dispositivo.EnderecoMAC);
+    alert('ASDASDSA');
+    this.fwBluetooth.conectaEnviaMensagemDispositivo("0", dispositivo.EnderecoMAC);
+    //this.fwComunicacao.fwBluetooth.conectarDispositivo(dispositivo.EnderecoMAC);
   }
 
   public checado: boolean = true;
+
+  teste3() {
+    //this.
+  }
 
   testeMQTT() {
     let conectou = (): void => {
