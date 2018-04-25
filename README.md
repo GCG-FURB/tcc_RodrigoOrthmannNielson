@@ -59,7 +59,7 @@ Para utilizar o MQTT, é necessário importar os módulos *FwMqttProvider*, *Con
 
 * [configurarMQTT()](https://bitbucket.org/gcgfurb/rodrigoorthmannnielson/overview#markdown-header-configurarMQTT)
 * [desconectar()](https://bitbucket.org/gcgfurb/rodrigoorthmannnielson/overview#markdown-header-desconectar)
-* [clienteConectado()](https://bitbucket.org/gcgfurb/rodrigoorthmannnielson/overview#markdown-header-clienteConectado)
+* [clienteConectado()](https://bitbucket.org/gcgfurb/rodrigoorthmannnielson/overview#markdown-header-cliente-conectado)
 * [publicar()](https://bitbucket.org/gcgfurb/rodrigoorthmannnielson/overview#markdown-header-publicar)
 * [inscrever()](https://bitbucket.org/gcgfurb/rodrigoorthmannnielson/overview#markdown-header-inscrever)
 * [desinscrever()](https://bitbucket.org/gcgfurb/rodrigoorthmannnielson/overview#markdown-header-desinscrever)
