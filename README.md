@@ -57,14 +57,14 @@ Para utilizar o MQTT, é necessário importar os módulos *FwMqttProvider*, *Con
 
 **Métodos:**
 
-* [configurarMQTT()](https://bitbucket.org/gcgfurb/rodrigoorthmannnielson/overview#markdown-header-configurarMQTT)
+* [configurarMqtt()](https://bitbucket.org/gcgfurb/rodrigoorthmannnielson/overview#markdown-header-configurar-mqtt)
 * [desconectar()](https://bitbucket.org/gcgfurb/rodrigoorthmannnielson/overview#markdown-header-desconectar)
 * [clienteConectado()](https://bitbucket.org/gcgfurb/rodrigoorthmannnielson/overview#markdown-header-cliente-conectado)
 * [publicar()](https://bitbucket.org/gcgfurb/rodrigoorthmannnielson/overview#markdown-header-publicar)
 * [inscrever()](https://bitbucket.org/gcgfurb/rodrigoorthmannnielson/overview#markdown-header-inscrever)
 * [desinscrever()](https://bitbucket.org/gcgfurb/rodrigoorthmannnielson/overview#markdown-header-desinscrever)
 
-### configurarMQTT()
+### configurarMqtt()
 
 Este método faz a configuração e conecta em um broker MQTT.
 ```
@@ -152,13 +152,13 @@ O exemplo a seguir ativa o bluetooth assim que a página for carregada.
 
 **Métodos:**
 
-* [ativarBluetooth()](https://bitbucket.org/gcgfurb/rodrigoorthmannnielson/overview#markdown-header-ativarBluetooth)
-* [dispositivoConectado()](https://bitbucket.org/gcgfurb/rodrigoorthmannnielson/overview#markdown-header-dispositivoConectado)
-* [conectarDispositivo()](https://bitbucket.org/gcgfurb/rodrigoorthmannnielson/overview#markdown-header-conectarDispositivo)
-* [enviarMensagem()](https://bitbucket.org/gcgfurb/rodrigoorthmannnielson/overview#markdown-header-enviarMensagem)
-* [conectaEnviaMensagemDispositivo()](https://bitbucket.org/gcgfurb/rodrigoorthmannnielson/overview#markdown-header-conectaEnviaMensagemDispositivo)
-* [listarDispositivosPareados()](https://bitbucket.org/gcgfurb/rodrigoorthmannnielson/overview#markdown-header-listarDispositivosPareados)
-* [listarDispositivosNaoPareados()](https://bitbucket.org/gcgfurb/rodrigoorthmannnielson/overview#markdown-header-listarDispositivosNaoPareados)
+* [ativarBluetooth()](https://bitbucket.org/gcgfurb/rodrigoorthmannnielson/overview#markdown-header-ativar-bluetooth)
+* [dispositivoConectado()](https://bitbucket.org/gcgfurb/rodrigoorthmannnielson/overview#markdown-header-dispositivo-conectado)
+* [conectarDispositivo()](https://bitbucket.org/gcgfurb/rodrigoorthmannnielson/overview#markdown-header-conectar-dispositivo)
+* [enviarMensagem()](https://bitbucket.org/gcgfurb/rodrigoorthmannnielson/overview#markdown-header-enviar-mensagem)
+* [conectaEnviaMensagemDispositivo()](https://bitbucket.org/gcgfurb/rodrigoorthmannnielson/overview#markdown-header-conecta-enviaMensagem-dispositivo)
+* [listarDispositivosPareados()](https://bitbucket.org/gcgfurb/rodrigoorthmannnielson/overview#markdown-header-listar-dispositivos-pareados)
+* [listarDispositivosNaoPareados()](https://bitbucket.org/gcgfurb/rodrigoorthmannnielson/overview#markdown-header-listar-dispositivos-nao-pareados)
 
 ### ativarBluetooth()
 
