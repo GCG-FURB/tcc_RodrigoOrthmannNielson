@@ -67,7 +67,6 @@ Para utilizar o MQTT, é necessário importar os módulos *FwMqttProvider*, *Con
 ### configurarMQTT()
 
 Este método faz a configuração e conecta em um broker MQTT.
->
 ```
 :::typescript
     let configuracao: ConfiguracaoMQTT = {
@@ -86,7 +85,6 @@ Este método faz a configuração e conecta em um broker MQTT.
 ### desconectar()
 
 Se desconecta de um broker MQTT.
->
 ```
 :::typescript
 	this.fwMQTT.desconectar();
@@ -95,34 +93,30 @@ Se desconecta de um broker MQTT.
 ### clienteConectado()
 
 Valida se existe um cliente conectado.
->
 ```
 :::typescript
 	this.fwMQTT.clienteConectado();
 ```
 
 ### publicar()
->
-Publica uma mensagem em um tópico do broker conectado.
 
+Publica uma mensagem em um tópico do broker conectado.
 ```
 :::typescript
 	this.fwMQTT.publicar('mensagem', '/topico/subtopico/etc');
 ```
 
 ### inscrever()
->
-Se inscreve em um tópico do broker conectado.
 
+Se inscreve em um tópico do broker conectado.
 ```
 :::typescript
 	this.fwMQTT.inscrever('/topico')
 ```
 
 ### desinscrever()
->
-Se desinscreve de um tópico.
 
+Se desinscreve de um tópico.
 ```
 :::typescript
 	this.fwMQTT.desinscrever('/topico');
@@ -139,7 +133,6 @@ Para utilizar o bluetooth, é necessário importar os módulos *DispositivoBluet
 Além disso, também é necessário ativar o bluetooth do celular.
 
 O exemplo a seguir ativa o bluetooth assim que a página for carregada.
->
 ```
 :::typescript
 	import { DispositivoBluetooth, FwBluetoothProvider } from 'fwiotfurb';
@@ -170,15 +163,14 @@ O exemplo a seguir ativa o bluetooth assim que a página for carregada.
 ### ativarBluetooth()
 
 Ativa o bluetooh do celular.
->
 ```
 :::typescript
 	fwBluetooth.ativarBluetooth();
 ```
 
 ### dispositivoConectado()
+
 Valida se existe algum dispositivo conectado.
->
 ```
 :::typescript
 	this.fwBluetooth.dispositivoConectado()
@@ -186,29 +178,29 @@ Valida se existe algum dispositivo conectado.
     	.catch((desconectado) => console.log('Dispositivo desconectado'));
 ```
 ### conectarDispositivo()
+
 Conecta em um dispositivo a partir do seu endereço MAC.
->
 ```
 :::typescript
 	this.fwBluetooth.conectarDispositivo('enderecoMAC');
 ```
 ### enviarMensagem()
+
 Envia uma mensagem pro dispositivo conectado.
->
 ```
 :::typescript
 	this.fwBluetooth.enviarMensagem('mensagem');
 ```
 ### conectaEnviaMensagemDispositivo()
+
 Conecta em um dispositivo e envia uma mensagem.
->
 ```
 :::typescript
 	this.fwBluetooth.conectaEnviaMensagemDispositivo("mensagem", 'enderecoMac');
 ```
 ### listarDispositivosPareados()
+
 Lista os dispositivos pareados com o celular.
->
 ```
 :::typescript
 		let listaDispositivosPareados: Array<DispositivoBluetooth> = new Array<DispositivoBluetooth>();
@@ -219,8 +211,8 @@ Lista os dispositivos pareados com o celular.
       	});
 ```
 ### listarDispositivosNaoPareados
+
 Lista os dispositivos não pareados com o celular.
->
 ```
 :::typescript
 	let listaDispositivosNaoPareados:  Array<DispositivoBluetooth> = new Array<DispositivoBluetooth>();
