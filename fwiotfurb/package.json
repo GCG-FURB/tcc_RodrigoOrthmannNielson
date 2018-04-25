@@ -1,0 +1,53 @@
+{
+  "_from": "fwiotfurb",
+  "_id": "fwiotfurb@0.9.0",
+  "_inBundle": false,
+  "_integrity": "sha512-6VEJuyNS+KKd8t8pPLAKiuhLPZ2/RVz1qf+80CjB2mCoV61jRjVskIUkzOx9gs0Tkdn0vkMhETMUgjLTPQlktQ==",
+  "_location": "/fwiotfurb",
+  "_phantomChildren": {
+    "chokidar": "1.7.0",
+    "minimist": "1.2.0",
+    "reflect-metadata": "0.1.12",
+    "symbol-observable": "1.0.1",
+    "tsickle": "0.27.5",
+    "tslib": "1.9.0"
+  },
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "fwiotfurb",
+    "name": "fwiotfurb",
+    "escapedName": "fwiotfurb",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/fwiotfurb/-/fwiotfurb-0.9.0.tgz",
+  "_shasum": "d3001075db569fb380158e3766e5413c82f52138",
+  "_spec": "fwiotfurb",
+  "_where": "E:\\Digo\\OneDrive\\TCC\\Testes IoT\\TesteNPM\\TesteNPM",
+  "author": {
+    "name": "RodrigoNielson"
+  },
+  "bundleDependencies": false,
+  "dependencies": {
+    "ng2-mqtt": "^0.1.2"
+  },
+  "deprecated": false,
+  "description": "framework para iot",
+  "keywords": [
+    "framework",
+    "iot"
+  ],
+  "license": "ISC",
+  "main": "index.js",
+  "name": "fwiotfurb",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "version": "0.9.2"
+}
