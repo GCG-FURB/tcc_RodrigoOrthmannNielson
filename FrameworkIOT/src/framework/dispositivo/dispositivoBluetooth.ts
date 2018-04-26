@@ -1,12 +1,13 @@
+import { ComandoDispositivo } from './comandoDispositivo';
 import { Dispositivo } from './dispositivo';
 
 export class DispositivoBluetooth extends Dispositivo {
     constructor(
         public Nome: string,
-        //public TipoComunicacao: TipoComunicacao,
         public EnderecoMAC: string,
-        public Id: string
+        public Id: string,
+        public ComandoDispositivo: ComandoDispositivo
     ) {
-        super(Nome/*, TipoComunicacao*/);
+        super(Nome, ComandoDispositivo);
     }
 }
