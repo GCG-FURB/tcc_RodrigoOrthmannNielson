@@ -1,11 +1,9 @@
-import { FwComunicacaoProvider } from './../../providers/fw-comunicacao/fw-comunicacao';
-import { ConfiguracaoMQTT } from './../../framework/configuracaoMQTT';
-import { FwMqttProvider } from './../../providers/fw-mqtt/fw-mqtt';
-import { DispositivoBluetooth } from './../../framework/dispositivo/dispositivoBluetooth';
-import { FwBluetoothProvider } from './../../providers/fw-bluetooth/fw-bluetooth';
+import { ConfiguracaoMQTT, FwMqttProvider, FwBluetoothProvider, DispositivoBluetooth } from 'fwiotfurb';
 import { Component } from '@angular/core';
 import { NavController, Platform, Toggle } from 'ionic-angular';
 import { Paho } from 'ng2-mqtt/mqttws31';
+import { BluetoothSerial } from '@ionic-native/bluetooth-serial';
+
 
 @Component({
   selector: 'page-home',
@@ -18,27 +16,27 @@ export class HomePage {
   public conectado: DispositivoBluetooth;
   public foi: boolean = false;
 
-  constructor(private fwComunicacao: FwComunicacaoProvider, private fwBluetooth: FwBluetoothProvider, private platform: Platform) {
+  constructor(private fwBluetooth: FwBluetoothProvider, private fwMQTT: FwMqttProvider, private platform: Platform) {
     this.platform.ready().then(() => fwBluetooth.ativarBluetooth());
   }
 
   listarDispositivosPareados(): void {
-    this.fwComunicacao.fwBluetooth.listarDispositivosPareados()
+    this.fwBluetooth.listarDispositivosPareados()
       .then((dispositivos) => {
         this.listaDispositivosPareados = dispositivos;
       });
   }
 
   listarDispositivosNaoPareados(): void {
-    this.fwComunicacao.fwBluetooth.listarDispositivosNaoPareados()
+    this.fwBluetooth.listarDispositivosNaoPareados()
       .then((dispositivos) => this.listaDispositivosNaoPareados = dispositivos);
   }
 
   conectadoDisp() {
     let res = this.fwBluetooth.dispositivoConectado()
-    .then(msg => alert(msg))
-    .catch(err => alert(err));
-    
+      .then(msg => alert(msg))
+      .catch(err => alert(err));
+
     // if (this.fwBluetooth.dispositivoConectado()) {
     //   alert('Conectado');
     // } else {
@@ -106,20 +104,20 @@ export class HomePage {
       }
     };
 
-    this.fwComunicacao.fwMQTT.configurarMQTT(configuracao);
+    this.fwMQTT.configurarMQTT(configuracao);
   }
 
 
   publicarMqtt() {
-    this.fwComunicacao.fwMQTT.publicar('oioi', '/teste');
+    this.fwMQTT.publicar('oioi', '/teste');
   }
 
   inscreverMqtt() {
-    this.fwComunicacao.fwMQTT.inscrever('/teste');
+    this.fwMQTT.inscrever('/teste');
   }
 
   desinscreverMqtt() {
-    this.fwComunicacao.fwMQTT.desinscrever('/teste');
+    this.fwMQTT.desinscrever('/teste');
   }
 
 

@@ -6,10 +6,8 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { BluetoothSerial } from '@ionic-native/bluetooth-serial';
 import { CabecalhoCustomizadoComponent } from './../components/cabecalho-customizado/cabecalho-customizado';
 import { MyApp } from './app.component';
-import { FwBluetoothProvider } from '../providers/fw-bluetooth/fw-bluetooth';
 import { HomePage } from '../pages/home/home';
-import { FwMqttProvider } from '../providers/fw-mqtt/fw-mqtt';
-import { FwComunicacaoProvider } from '../providers/fw-comunicacao/fw-comunicacao';
+import { FwBluetoothProvider, FwMqttProvider } from 'fwiotfurb';
 
 @NgModule({
   declarations: [
@@ -30,10 +28,9 @@ import { FwComunicacaoProvider } from '../providers/fw-comunicacao/fw-comunicaca
     BluetoothSerial,
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    { provide: ErrorHandler, useClass: IonicErrorHandler },
     FwBluetoothProvider,
     FwMqttProvider,
-    FwComunicacaoProvider
   ]
 })
-export class AppModule {}
+export class AppModule { }

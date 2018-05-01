@@ -1,4 +1,3 @@
-"use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -9,8 +8,7 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-exports.__esModule = true;
-var dispositivo_1 = require("./dispositivo");
+import { Dispositivo } from './dispositivo';
 var DispositivoMQTT = /** @class */ (function (_super) {
     __extends(DispositivoMQTT, _super);
     function DispositivoMQTT(Nome, 
@@ -24,5 +22,6 @@ var DispositivoMQTT = /** @class */ (function (_super) {
         return _this;
     }
     return DispositivoMQTT;
-}(dispositivo_1.Dispositivo));
-exports.DispositivoMQTT = DispositivoMQTT;
+}(Dispositivo));
+export { DispositivoMQTT };
+//# sourceMappingURL=dispositivoMQTT.js.map
