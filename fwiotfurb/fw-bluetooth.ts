@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { AlertController, Platform } from 'ionic-angular';
 import { BluetoothSerial } from '@ionic-native/bluetooth-serial';
 import { DispositivoBluetooth } from './objetos/dispositivo/dispositivoBluetooth';
 
@@ -7,9 +6,7 @@ import { DispositivoBluetooth } from './objetos/dispositivo/dispositivoBluetooth
 export class FwBluetoothProvider {
 
   constructor(
-    private platform: Platform,
     private bluetoothSerial: BluetoothSerial,
-    private alertCtrl: AlertController
   ) {
   }
 

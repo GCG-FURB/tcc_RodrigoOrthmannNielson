@@ -10,18 +10,18 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 exports.__esModule = true;
-var dispositivo_1 = require("./dispositivo");
-var DispositivoBluetooth = /** @class */ (function (_super) {
-    __extends(DispositivoBluetooth, _super);
-    function DispositivoBluetooth(Nome, 
-    //public TipoComunicacao: TipoComunicacao,
-    EnderecoMAC, Id) {
-        var _this = _super.call(this, Nome /*, TipoComunicacao*/) || this;
-        _this.Nome = Nome;
-        _this.EnderecoMAC = EnderecoMAC;
-        _this.Id = Id;
+var comandoDispositivo_1 = require("./comandoDispositivo");
+/**
+ * Classe utilizada para dispositivos com comandos ON e OFF. Ex: lâmpadas sem controle de intensidade
+ */
+var ComandoONOFF = /** @class */ (function (_super) {
+    __extends(ComandoONOFF, _super);
+    function ComandoONOFF(ON, OFF) {
+        var _this = _super.call(this) || this;
+        _this.ON = ON;
+        _this.OFF = OFF;
         return _this;
     }
-    return DispositivoBluetooth;
-}(dispositivo_1.Dispositivo));
-exports.DispositivoBluetooth = DispositivoBluetooth;
+    return ComandoONOFF;
+}(comandoDispositivo_1.ComandoDispositivo));
+exports.ComandoONOFF = ComandoONOFF;

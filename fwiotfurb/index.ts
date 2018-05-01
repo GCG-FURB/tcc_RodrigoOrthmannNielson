@@ -7,3 +7,7 @@ export * from './objetos/dispositivo/dispositivo';
 export * from './objetos/dispositivo/dispositivoBluetooth';
 export * from './objetos/dispositivo/dispositivoMQTT';
 export * from './objetos/dispositivo/tipoComunicacaoEnum';
+export * from './objetos/casa/casa';
+export * from './objetos/casa/comodo';
+export * from './objetos/dispositivo/comandoDispositivo';
+export * from './objetos/dispositivo/comandoONOFF';
