@@ -24,6 +24,25 @@ O fwiotfurb é um framework para Ionic 2+ que visa facilitar a comunicação com
 6. Instalar o pacote fwiotfurb
 >`npm install fwiotfurb`
 
+# Importar os providers
+
+Tanto para o ambiente Mqtt quanto Bluetooth, é necessário importar os seus providers no app.module.ts
+
+```
+:::typescript
+	import { FwMqttProvider, FwBluetoothProvider } from 'fwiotfurb';
+
+	...
+	
+	providers: [
+		...
+    	BluetoothSerial,
+    	FwBluetoothProvider,
+    	FwMqttProvider,
+		...
+  ]
+```
+
 # Ambiente MQTT
 * * * 
 Para informações sobre o que é e como funciona o MQTT: [Site oficial](http://mqtt.org/), [Artigo IBM](http://mqtt.org/).
