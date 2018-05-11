@@ -1,3 +1,5 @@
+import { AdicionarDispositivoMqttPage } from './../pages/adicionar-dispositivo-mqtt/adicionar-dispositivo-mqtt';
+import { MeusDispositivosPage } from './../pages/meus-dispositivos/meus-dispositivos';
 import { CadastroUsuarioPage } from './../pages/cadastro-usuario/cadastro-usuario';
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
@@ -24,6 +26,8 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AutenticacaoProvider } from '../providers/autenticacao/autenticacao';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'; // <== add the imports!
+import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { DispositivosFirebaseProvider } from '../providers/dispositivos-firebase/dispositivos-firebase';
 
 @NgModule({
   declarations: [
@@ -31,12 +35,15 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms'; // <== add th
     HomePage,
     LoginPage,
     CabecalhoCustomizadoComponent,
-    CadastroUsuarioPage
+    CadastroUsuarioPage,
+    MeusDispositivosPage,
+    AdicionarDispositivoMqttPage
   ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(Firebase.Configuracao),
+    AngularFireDatabaseModule,
     NgxErrorsModule,
     FormsModule,                          
     ReactiveFormsModule
@@ -46,7 +53,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms'; // <== add th
     MyApp,
     HomePage,
     LoginPage,
-    CadastroUsuarioPage
+    CadastroUsuarioPage,
+    MeusDispositivosPage,
+    AdicionarDispositivoMqttPage
   ],
   providers: [
     BluetoothSerial,
@@ -56,7 +65,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms'; // <== add th
     FwBluetoothProvider,
     FwMqttProvider,
     AngularFireAuth,
-    AutenticacaoProvider
+    AutenticacaoProvider,
+    DispositivosFirebaseProvider
   ]
 })
 export class AppModule { }

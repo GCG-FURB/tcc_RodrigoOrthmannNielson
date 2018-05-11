@@ -1,0 +1,28 @@
+<!--
+  Generated template for the MeusDispositivosPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>MeusDispositivos</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content padding>
+
+  <ion-item *ngFor="let disp of listaDispositivos">
+    {{disp.Nome}}
+  </ion-item>
+
+
+  <ion-fab bottom right>
+    <button ion-fab (click)="adicionarDispositivo()">
+      <ion-icon name="add"></ion-icon>
+    </button>
+  </ion-fab>
+
+</ion-content>

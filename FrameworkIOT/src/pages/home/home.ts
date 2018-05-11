@@ -17,7 +17,7 @@ export class HomePage {
   public foi: boolean = false;
 
   constructor(private fwBluetooth: FwBluetoothProvider, private fwMQTT: FwMqttProvider, private platform: Platform) {
-    this.platform.ready().then(() => fwBluetooth.ativarBluetooth());
+    //this.platform.ready().then(() => fwBluetooth.ativarBluetooth());
   }
 
   listarDispositivosPareados(): void {

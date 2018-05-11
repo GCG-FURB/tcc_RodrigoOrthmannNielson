@@ -24,7 +24,11 @@ export class AutenticacaoProvider {
 
   get authenticated(): boolean {
     return this.user !== null;
-  }
+	}
+	
+	obterIdUsuario(): string {
+		return this.user.uid;
+	} 
 
   getEmail() {
     return this.user && this.user.email;

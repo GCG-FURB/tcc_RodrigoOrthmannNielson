@@ -1,3 +1,4 @@
+import { MeusDispositivosPage } from './../pages/meus-dispositivos/meus-dispositivos';
 import { AutenticacaoProvider } from './../providers/autenticacao/autenticacao';
 import { Component, ViewChild } from '@angular/core';
 import { Platform, Nav, MenuController } from 'ionic-angular';
@@ -18,7 +19,8 @@ export class MyApp {
   constructor(private platform: Platform, private statusBar: StatusBar, splashScreen: SplashScreen, public menuCtrl: MenuController, public auth: AutenticacaoProvider) {
 
     this.paginas = [
-      { titulo: 'Home Page', component: HomePage }
+      { titulo: 'Home Page', component: HomePage },
+      { titulo: 'Meus Dispositivos', component: MeusDispositivosPage}
     ];
 
     // platform.ready().then(() => {
