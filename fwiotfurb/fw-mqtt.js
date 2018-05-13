@@ -1,14 +1,13 @@
+"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-import { Injectable } from '@angular/core';
-import { Paho } from 'ng2-mqtt/mqttws31';
+exports.__esModule = true;
+var core_1 = require("@angular/core");
+var mqttws31_1 = require("ng2-mqtt/mqttws31");
 var FwMqttProvider = /** @class */ (function () {
     function FwMqttProvider() {
     }
@@ -31,7 +30,7 @@ var FwMqttProvider = /** @class */ (function () {
      * @param configuracao Objetos com configuração do MQTT
      */
     FwMqttProvider.prototype.configurarMQTT = function (configuracao) {
-        this.Cliente = new Paho.MQTT.Client(configuracao.hostname, configuracao.porta, configuracao.idCliente);
+        this.Cliente = new mqttws31_1.Paho.MQTT.Client(configuracao.hostname, configuracao.porta, configuracao.idCliente);
         this.Cliente.onConnectionLost = this.conexaoPerdida;
         this.Cliente.onMessageArrived = configuracao.mensagemRecebida != null ? configuracao.mensagemRecebida : this.mensagemRecebida;
         this.conectarCliente({
@@ -83,7 +82,7 @@ var FwMqttProvider = /** @class */ (function () {
      */
     FwMqttProvider.prototype.publicar = function (mensagem, topico, qos) {
         if (this.Cliente != null && this.Cliente.isConnected()) {
-            var msg = new Paho.MQTT.Message(mensagem);
+            var msg = new mqttws31_1.Paho.MQTT.Message(mensagem);
             msg.destinationName = topico;
             if (qos != null)
                 msg.qos = qos;
@@ -107,10 +106,8 @@ var FwMqttProvider = /** @class */ (function () {
         this.Cliente.unsubscribe(topico, opcoesDesisncricao);
     };
     FwMqttProvider = __decorate([
-        Injectable(),
-        __metadata("design:paramtypes", [])
+        core_1.Injectable()
     ], FwMqttProvider);
     return FwMqttProvider;
 }());
-export { FwMqttProvider };
-//# sourceMappingURL=fw-mqtt.js.map
+exports.FwMqttProvider = FwMqttProvider;

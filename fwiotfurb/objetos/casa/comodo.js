@@ -1,3 +1,5 @@
+"use strict";
+exports.__esModule = true;
 var Comodo = /** @class */ (function () {
     function Comodo(Nome, Descricao, Dispositivos) {
         this.Nome = Nome;
@@ -6,5 +8,4 @@ var Comodo = /** @class */ (function () {
     }
     return Comodo;
 }());
-export { Comodo };
-//# sourceMappingURL=comodo.js.map
+exports.Comodo = Comodo;

@@ -1,7 +1,8 @@
+"use strict";
+exports.__esModule = true;
 var ComandoDispositivo = /** @class */ (function () {
     function ComandoDispositivo() {
     }
     return ComandoDispositivo;
 }());
-export { ComandoDispositivo };
-//# sourceMappingURL=comandoDispositivo.js.map
+exports.ComandoDispositivo = ComandoDispositivo;

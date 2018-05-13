@@ -1,15 +1,13 @@
+"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-import { Injectable } from '@angular/core';
-import { BluetoothSerial } from '@ionic-native/bluetooth-serial';
-import { DispositivoBluetooth } from './objetos/dispositivo/dispositivoBluetooth';
+exports.__esModule = true;
+var core_1 = require("@angular/core");
+var dispositivoBluetooth_1 = require("./objetos/dispositivo/dispositivoBluetooth");
 var FwBluetoothProvider = /** @class */ (function () {
     function FwBluetoothProvider(bluetoothSerial) {
         this.bluetoothSerial = bluetoothSerial;
@@ -19,8 +17,7 @@ var FwBluetoothProvider = /** @class */ (function () {
      */
     FwBluetoothProvider.prototype.ativarBluetooth = function () {
         this.bluetoothSerial.enable()
-            .then(function () { return console.log('Bluetooth ativado'); })
-            .catch(function (err) { return alert(err); });
+            .then(function () { return console.log('Bluetooth ativado'); })["catch"](function (err) { return alert(err); });
     };
     /**
      * Valida se existe algum dispositivo conectado
@@ -30,8 +27,7 @@ var FwBluetoothProvider = /** @class */ (function () {
         var _this = this;
         return new Promise(function (resolve, reject) {
             _this.bluetoothSerial.isConnected()
-                .then(function (msg) { return resolve(msg == "OK"); })
-                .catch(function (err) { return reject(false); });
+                .then(function (msg) { return resolve(msg == "OK"); })["catch"](function (err) { return reject(false); });
         });
     };
     /**
@@ -47,8 +43,7 @@ var FwBluetoothProvider = /** @class */ (function () {
      */
     FwBluetoothProvider.prototype.enviarMensagem = function (mensagem, funcaoSucesso, funcaoErro) {
         this.bluetoothSerial.write(mensagem.toString())
-            .then(function (success) { return funcaoSucesso == undefined ? console.log('Enviou a mensagem com sucesso' + success) : funcaoSucesso; })
-            .catch(function (err) { return funcaoErro == undefined ? console.log('Erro ao enviar mensagem' + err) : funcaoErro; });
+            .then(function (success) { return funcaoSucesso == undefined ? console.log('Enviou a mensagem com sucesso' + success) : funcaoSucesso; })["catch"](function (err) { return funcaoErro == undefined ? console.log('Erro ao enviar mensagem' + err) : funcaoErro; });
     };
     /**
      * Conecta e envia uma mensagem à um determinado dispositivo.
@@ -67,8 +62,7 @@ var FwBluetoothProvider = /** @class */ (function () {
         })
             .then(function (msg) {
             _this.conectarEEnviarMensagemTimeout(mensagem, enderecoMac);
-        })
-            .catch(function (err) {
+        })["catch"](function (err) {
             _this.conectarEEnviarMensagemTimeout(mensagem, enderecoMac);
         });
     };
@@ -94,7 +88,7 @@ var FwBluetoothProvider = /** @class */ (function () {
             _this.bluetoothSerial.list().then(function (dispositivos) {
                 var dispositivosPareados = new Array();
                 dispositivos.forEach(function (d) {
-                    dispositivosPareados.push(new DispositivoBluetooth(d.name, d.address, d.id));
+                    dispositivosPareados.push(new dispositivoBluetooth_1.DispositivoBluetooth(d.name, d.address, d.id));
                 });
                 resolve(dispositivosPareados);
             });
@@ -114,7 +108,7 @@ var FwBluetoothProvider = /** @class */ (function () {
                 .then(function (dispositivos) {
                 var dispositivosNaoPareados = new Array();
                 dispositivos.forEach(function (d) {
-                    dispositivosNaoPareados.push(new DispositivoBluetooth(d.name, d.address, d.id));
+                    dispositivosNaoPareados.push(new dispositivoBluetooth_1.DispositivoBluetooth(d.name, d.address, d.id));
                 });
                 resolve(dispositivosNaoPareados);
             });
@@ -124,10 +118,8 @@ var FwBluetoothProvider = /** @class */ (function () {
         });
     };
     FwBluetoothProvider = __decorate([
-        Injectable(),
-        __metadata("design:paramtypes", [BluetoothSerial])
+        core_1.Injectable()
     ], FwBluetoothProvider);
     return FwBluetoothProvider;
 }());
-export { FwBluetoothProvider };
-//# sourceMappingURL=fw-bluetooth.js.map
+exports.FwBluetoothProvider = FwBluetoothProvider;
