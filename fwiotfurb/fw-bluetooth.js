@@ -88,7 +88,7 @@ var FwBluetoothProvider = /** @class */ (function () {
             _this.bluetoothSerial.list().then(function (dispositivos) {
                 var dispositivosPareados = new Array();
                 dispositivos.forEach(function (d) {
-                    dispositivosPareados.push(new dispositivoBluetooth_1.DispositivoBluetooth(d.name, d.address, d.id));
+                    dispositivosPareados.push(new dispositivoBluetooth_1.DispositivoBluetooth(d.name, null, d.address, d.id));
                 });
                 resolve(dispositivosPareados);
             });
@@ -108,7 +108,7 @@ var FwBluetoothProvider = /** @class */ (function () {
                 .then(function (dispositivos) {
                 var dispositivosNaoPareados = new Array();
                 dispositivos.forEach(function (d) {
-                    dispositivosNaoPareados.push(new dispositivoBluetooth_1.DispositivoBluetooth(d.name, d.address, d.id));
+                    dispositivosNaoPareados.push(new dispositivoBluetooth_1.DispositivoBluetooth(d.name, null, d.address, d.id));
                 });
                 resolve(dispositivosNaoPareados);
             });
