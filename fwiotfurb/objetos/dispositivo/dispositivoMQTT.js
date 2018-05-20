@@ -13,11 +13,10 @@ exports.__esModule = true;
 var dispositivo_1 = require("./dispositivo");
 var DispositivoMQTT = /** @class */ (function (_super) {
     __extends(DispositivoMQTT, _super);
-    function DispositivoMQTT(Nome, 
-    //public TipoComunicacao: TipoComunicacao,
-    TopicoPublicacao, TopicoInscricao, Configuracao) {
-        var _this = _super.call(this, Nome /*, TipoComunicacao*/) || this;
+    function DispositivoMQTT(Nome, ComandoDispositivo, TopicoPublicacao, TopicoInscricao, Configuracao) {
+        var _this = _super.call(this, Nome, ComandoDispositivo) || this;
         _this.Nome = Nome;
+        _this.ComandoDispositivo = ComandoDispositivo;
         _this.TopicoPublicacao = TopicoPublicacao;
         _this.TopicoInscricao = TopicoInscricao;
         _this.Configuracao = Configuracao;

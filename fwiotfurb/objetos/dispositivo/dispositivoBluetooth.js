@@ -13,11 +13,10 @@ exports.__esModule = true;
 var dispositivo_1 = require("./dispositivo");
 var DispositivoBluetooth = /** @class */ (function (_super) {
     __extends(DispositivoBluetooth, _super);
-    function DispositivoBluetooth(Nome, 
-    //public TipoComunicacao: TipoComunicacao,
-    EnderecoMAC, Id) {
-        var _this = _super.call(this, Nome /*, TipoComunicacao*/) || this;
+    function DispositivoBluetooth(Nome, ComandoDispositivo, EnderecoMAC, Id) {
+        var _this = _super.call(this, Nome, ComandoDispositivo) || this;
         _this.Nome = Nome;
+        _this.ComandoDispositivo = ComandoDispositivo;
         _this.EnderecoMAC = EnderecoMAC;
         _this.Id = Id;
         return _this;
