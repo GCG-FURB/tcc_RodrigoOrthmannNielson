@@ -1,5 +1,3 @@
-"use strict";
-exports.__esModule = true;
 var Dispositivo = /** @class */ (function () {
     function Dispositivo(Nome, ComandoDispositivo) {
         this.Nome = Nome;
@@ -7,4 +5,5 @@ var Dispositivo = /** @class */ (function () {
     }
     return Dispositivo;
 }());
-exports.Dispositivo = Dispositivo;
+export { Dispositivo };
+//# sourceMappingURL=dispositivo.js.map

@@ -1,11 +1,6 @@
 <ion-header>
-	<ion-navbar>
-		<button ion-button menuToggle>
-			<ion-icon name="menu"></ion-icon>
-		</button>
-		<ion-title>Entrar</ion-title>
-	</ion-navbar>
-</ion-header>
+		<cabecalho-customizado [titulo]="'Entrar'"></cabecalho-customizado>
+	</ion-header>
 
 <ion-content>
 	<form (ngSubmit)="login()" [formGroup]="loginForm">

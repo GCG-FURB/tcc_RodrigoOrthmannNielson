@@ -2,7 +2,7 @@ import { DispositivosFirebaseProvider } from './../../providers/dispositivos-fir
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { Dispositivo, DispositivoMQTT } from 'fwiotfurb';
+import { Dispositivo, DispositivoMQTT, ComandoDispositivo, ComandoONOFF } from 'fwiotfurb';
 
 /**
  * Generated class for the AdicionarDispositivoMqttPage page.
@@ -35,6 +35,7 @@ export class AdicionarDispositivoMqttPage {
     this.dbDispositivo.AdicionarDispositivo(
       new DispositivoMQTT(
         nome.value,
+        new ComandoONOFF(comandoON.value, comandoOFF.value),
         topico.value,
         topico.value,
         null

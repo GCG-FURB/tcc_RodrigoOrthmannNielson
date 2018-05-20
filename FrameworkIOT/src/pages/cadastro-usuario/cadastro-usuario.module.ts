@@ -1,3 +1,4 @@
+import { CabecalhoCustomizadoComponent } from './../../components/cabecalho-customizado/cabecalho-customizado';
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { CadastroUsuarioPage } from './cadastro-usuario';

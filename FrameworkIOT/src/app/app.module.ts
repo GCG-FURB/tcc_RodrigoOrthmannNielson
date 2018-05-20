@@ -1,3 +1,4 @@
+import { ConfiguracoesPage } from './../pages/configuracoes/configuracoes';
 import { AdicionarDispositivoMqttPage } from './../pages/adicionar-dispositivo-mqtt/adicionar-dispositivo-mqtt';
 import { MeusDispositivosPage } from './../pages/meus-dispositivos/meus-dispositivos';
 import { CadastroUsuarioPage } from './../pages/cadastro-usuario/cadastro-usuario';
@@ -37,7 +38,8 @@ import { DispositivosFirebaseProvider } from '../providers/dispositivos-firebase
     CabecalhoCustomizadoComponent,
     CadastroUsuarioPage,
     MeusDispositivosPage,
-    AdicionarDispositivoMqttPage
+    AdicionarDispositivoMqttPage,
+    ConfiguracoesPage
   ],
   imports: [
     BrowserModule,
@@ -55,7 +57,8 @@ import { DispositivosFirebaseProvider } from '../providers/dispositivos-firebase
     LoginPage,
     CadastroUsuarioPage,
     MeusDispositivosPage,
-    AdicionarDispositivoMqttPage
+    AdicionarDispositivoMqttPage,
+    ConfiguracoesPage
   ],
   providers: [
     BluetoothSerial,

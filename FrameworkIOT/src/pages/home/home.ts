@@ -83,6 +83,7 @@ export class HomePage {
   }
 
   testeMQTT() {
+    console.log('Tentando conectar');
     let conectou = (): void => {
       console.log('COnseguiu conectarrr');
     }

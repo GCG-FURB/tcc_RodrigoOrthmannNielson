@@ -1,4 +1,3 @@
-"use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -9,8 +8,7 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-exports.__esModule = true;
-var comandoDispositivo_1 = require("./comandoDispositivo");
+import { ComandoDispositivo } from './comandoDispositivo';
 /**
  * Classe utilizada para dispositivos com comandos ON e OFF. Ex: lâmpadas sem controle de intensidade
  */
@@ -23,5 +21,6 @@ var ComandoONOFF = /** @class */ (function (_super) {
         return _this;
     }
     return ComandoONOFF;
-}(comandoDispositivo_1.ComandoDispositivo));
-exports.ComandoONOFF = ComandoONOFF;
+}(ComandoDispositivo));
+export { ComandoONOFF };
+//# sourceMappingURL=comandoONOFF.js.map

@@ -7,22 +7,20 @@
     </ion-header>
 
     <ion-content>
-        <ion-list>
+        <ion-list-header *ngIf="auth.getEmail()">{{auth.getEmail()}}</ion-list-header>
+        <ion-list *ngIf="auth.authenticated">
             <button ion-item *ngFor="let p of paginas" (click)="abrirPagina(p)" menuClose>
                 {{ p.titulo }}
             </button>
+            <button ion-item menuClose (click)="logout()">
+                <ion-icon name='log-out' item-right></ion-icon>
+                Sair
+            </button>
         </ion-list>
 
-        <ion-list-header *ngIf="auth.getEmail()">{{auth.getEmail()}}</ion-list-header>
-
-        <ion-item (click)="logout()" *ngIf="auth.authenticated">
-            <ion-icon name="log-out" item-left></ion-icon>
-            Log out
-        </ion-item>
-
         <ion-item (click)="login()" *ngIf="!auth.authenticated">
-            <ion-icon name="log-in" item-left></ion-icon>
-            Log in
+            <ion-icon name='log-in' item-right></ion-icon>
+            Entrar
         </ion-item>
 
     </ion-content>

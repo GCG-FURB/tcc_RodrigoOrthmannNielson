@@ -1,9 +1,7 @@
 <ion-header>
-	<ion-navbar>
-		<ion-title>Sign up</ion-title>
-	</ion-navbar>
-</ion-header>
-
+		<cabecalho-customizado [titulo]="'Cadastrar'"></cabecalho-customizado>
+	</ion-header>
+	
 <ion-content>
 
 	<form (ngSubmit)="signup()" [formGroup]="form">

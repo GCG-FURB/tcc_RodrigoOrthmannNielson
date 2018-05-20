@@ -1,3 +1,4 @@
+import { ConfiguracoesPage } from './../pages/configuracoes/configuracoes';
 import { MeusDispositivosPage } from './../pages/meus-dispositivos/meus-dispositivos';
 import { AutenticacaoProvider } from './../providers/autenticacao/autenticacao';
 import { Component, ViewChild } from '@angular/core';
@@ -20,7 +21,8 @@ export class MyApp {
 
     this.paginas = [
       { titulo: 'Home Page', component: HomePage },
-      { titulo: 'Meus Dispositivos', component: MeusDispositivosPage}
+      { titulo: 'Meus Dispositivos', component: MeusDispositivosPage},
+      { titulo: 'Configurações', component: ConfiguracoesPage}
     ];
 
     // platform.ready().then(() => {
@@ -29,6 +31,7 @@ export class MyApp {
     //   statusBar.styleDefault();
     //   splashScreen.hide();
     // });
+    this.initializeApp();
   }
 
   initializeApp() {
