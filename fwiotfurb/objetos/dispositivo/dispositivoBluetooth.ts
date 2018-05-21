@@ -5,9 +5,10 @@ export class DispositivoBluetooth extends Dispositivo {
     constructor(
         public Nome: string,
         public ComandoDispositivo: ComandoDispositivo,
+        public Estado: string,
         public EnderecoMAC: string,
         public Id: string
     ) {
-        super(Nome, ComandoDispositivo);
+        super(Nome, ComandoDispositivo, Estado);
     }
 }

@@ -36,6 +36,7 @@ export class AdicionarDispositivoMqttPage {
       new DispositivoMQTT(
         nome.value,
         new ComandoONOFF(comandoON.value, comandoOFF.value),
+        comandoOFF.value,
         topico.value,
         topico.value,
         null

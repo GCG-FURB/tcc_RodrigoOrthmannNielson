@@ -2,8 +2,29 @@
 		<cabecalho-customizado [titulo]="'Configurações'"></cabecalho-customizado>
 </ion-header>
 	
-
-
 <ion-content padding>
 
-</ion-content>
+    <form [formGroup]="formulario" (ngSubmit)="atualizarConfiguracaoMQTT()">
+      <ion-item>
+        <ion-label stacked>Hostname mqtt</ion-label>
+        <ion-input type="text" value="{{ configuracaoAtual == null? '' : configuracaoAtual.hostname }}" formControlName="hostname"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label stacked>Porta</ion-label>
+          <ion-input value="{{ configuracaoAtual == null? '' : configuracaoAtual.porta }}" formControlName="porta"></ion-input>
+      </ion-item>
+  
+      <ion-item>
+        <ion-label stacked>Usuario</ion-label>
+        <ion-input value="{{ configuracaoAtual == null? '' : configuracaoAtual.configuracaoAutenticacao.usuario }}" formControlName="usuario"></ion-input>
+      </ion-item>
+  
+      <ion-item>
+        <ion-label stacked>Senha</ion-label>
+        <ion-input value="{{ configuracaoAtual == null? '' : configuracaoAtual.configuracaoAutenticacao.senha }}" formControlName="senha"></ion-input>
+      </ion-item>
+  
+      <button ion-button block type="submit" [disabled]="!formulario.valid">Submit</button>
+    </form>
+  
+  </ion-content>

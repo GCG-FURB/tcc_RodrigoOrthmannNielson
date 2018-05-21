@@ -1,5 +1,8 @@
+import { ConfiguracaoMQTT } from 'fwiotfurb';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+import { ConfiguracaoMqttProvider } from '../../providers/configuracao-mqtt/configuracao-mqtt';
 
 /**
  * Generated class for the ConfiguracoesPage page.
@@ -15,11 +18,48 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class ConfiguracoesPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  public formulario: FormGroup;
+  public configuracaoAtual: ConfiguracaoMQTT;
+
+  constructor(
+    private formBuilder: FormBuilder,
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public configMQTT: ConfiguracaoMqttProvider,
+    private alertCtrl: AlertController
+  ) {
+
+    this.formulario = this.formBuilder.group({
+      hostname: ['', Validators.required],
+      porta: ['', Validators.required],
+      usuario: ['', Validators.required],
+      senha: ['', Validators.required]
+    });
+
+    configMQTT.ObterConfiguracao().subscribe(configuracao => {
+      this.configuracaoAtual = configuracao;
+    })
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad ConfiguracoesPage');
-  }
+  atualizarConfiguracaoMQTT() {
+    let { hostname, porta, usuario, senha } = this.formulario.controls;
 
+    let novaConfiguracao: ConfiguracaoMQTT = {
+      hostname: hostname.value,
+      porta: porta.value,
+      idCliente: '0',
+      configuracaoAutenticacao: {
+        usuario: usuario.value,
+        senha: senha.value
+      }
+    };
+
+    this.configMQTT.AtualizarConfiguracao(novaConfiguracao);
+
+    let alert = this.alertCtrl.create({
+      subTitle: 'A configuração MQTT foi atualizada com sucesso',
+      buttons: ['OK']
+    });
+    alert.present();
+  }
 }

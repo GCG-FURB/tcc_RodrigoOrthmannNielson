@@ -29,6 +29,7 @@ import { AutenticacaoProvider } from '../providers/autenticacao/autenticacao';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'; // <== add the imports!
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { DispositivosFirebaseProvider } from '../providers/dispositivos-firebase/dispositivos-firebase';
+import { ConfiguracaoMqttProvider } from '../providers/configuracao-mqtt/configuracao-mqtt';
 
 @NgModule({
   declarations: [
@@ -69,7 +70,8 @@ import { DispositivosFirebaseProvider } from '../providers/dispositivos-firebase
     FwMqttProvider,
     AngularFireAuth,
     AutenticacaoProvider,
-    DispositivosFirebaseProvider
+    DispositivosFirebaseProvider,
+    ConfiguracaoMqttProvider
   ]
 })
 export class AppModule { }

@@ -1,7 +1,8 @@
 var Dispositivo = /** @class */ (function () {
-    function Dispositivo(Nome, ComandoDispositivo) {
+    function Dispositivo(Nome, ComandoDispositivo, Estado) {
         this.Nome = Nome;
         this.ComandoDispositivo = ComandoDispositivo;
+        this.Estado = Estado;
     }
     return Dispositivo;
 }());
