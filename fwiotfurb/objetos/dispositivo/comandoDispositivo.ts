@@ -1,3 +1,3 @@
 export class ComandoDispositivo {
-    constructor() {}
+    constructor(public TipoComando: string) {}
 }

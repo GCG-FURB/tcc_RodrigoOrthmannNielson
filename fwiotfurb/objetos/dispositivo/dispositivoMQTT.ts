@@ -8,10 +8,11 @@ export class DispositivoMQTT extends Dispositivo {
         public Nome: string,
         public ComandoDispositivo: ComandoDispositivo,
         public Estado: string,
+        public TipoDispositivo: string,
         public TopicoPublicacao: string,
         public TopicoInscricao: string,
         public Configuracao: ConfiguracaoMQTT
     ) {
-        super(Nome, ComandoDispositivo, Estado);
+        super(Nome, ComandoDispositivo, Estado, TipoDispositivo);
     }
 }

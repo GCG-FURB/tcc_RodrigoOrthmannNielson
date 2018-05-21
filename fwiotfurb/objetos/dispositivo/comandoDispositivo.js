@@ -1,5 +1,6 @@
 var ComandoDispositivo = /** @class */ (function () {
-    function ComandoDispositivo() {
+    function ComandoDispositivo(TipoComando) {
+        this.TipoComando = TipoComando;
     }
     return ComandoDispositivo;
 }());

@@ -5,8 +5,8 @@ import { ComandoDispositivo } from './comandoDispositivo';
  */
 export class ComandoONOFF extends ComandoDispositivo{
 
-    constructor(public ON: string, public OFF: string) {
-        super();
+    constructor(public TipoComando: string, public ON: string, public OFF: string) {
+        super(TipoComando);
     }
 
 }

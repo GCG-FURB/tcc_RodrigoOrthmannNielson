@@ -1,1 +1,1 @@
-{"version":3,"file":"comandoDispositivo.js","sourceRoot":"","sources":["comandoDispositivo.ts"],"names":[],"mappings":"AAAA;IACI;IAAe,CAAC;IACpB,yBAAC;AAAD,CAAC,AAFD,IAEC"}
+{"version":3,"file":"comandoDispositivo.js","sourceRoot":"","sources":["comandoDispositivo.ts"],"names":[],"mappings":"AAAA;IACI,4BAAmB,WAAmB;QAAnB,gBAAW,GAAX,WAAW,CAAQ;IAAG,CAAC;IAC9C,yBAAC;AAAD,CAAC,AAFD,IAEC"}

@@ -11,11 +11,12 @@ var __extends = (this && this.__extends) || (function () {
 import { Dispositivo } from './dispositivo';
 var DispositivoMQTT = /** @class */ (function (_super) {
     __extends(DispositivoMQTT, _super);
-    function DispositivoMQTT(Nome, ComandoDispositivo, Estado, TopicoPublicacao, TopicoInscricao, Configuracao) {
-        var _this = _super.call(this, Nome, ComandoDispositivo, Estado) || this;
+    function DispositivoMQTT(Nome, ComandoDispositivo, Estado, TipoDispositivo, TopicoPublicacao, TopicoInscricao, Configuracao) {
+        var _this = _super.call(this, Nome, ComandoDispositivo, Estado, TipoDispositivo) || this;
         _this.Nome = Nome;
         _this.ComandoDispositivo = ComandoDispositivo;
         _this.Estado = Estado;
+        _this.TipoDispositivo = TipoDispositivo;
         _this.TopicoPublicacao = TopicoPublicacao;
         _this.TopicoInscricao = TopicoInscricao;
         _this.Configuracao = Configuracao;

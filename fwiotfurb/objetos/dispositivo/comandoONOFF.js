@@ -14,8 +14,9 @@ import { ComandoDispositivo } from './comandoDispositivo';
  */
 var ComandoONOFF = /** @class */ (function (_super) {
     __extends(ComandoONOFF, _super);
-    function ComandoONOFF(ON, OFF) {
-        var _this = _super.call(this) || this;
+    function ComandoONOFF(TipoComando, ON, OFF) {
+        var _this = _super.call(this, TipoComando) || this;
+        _this.TipoComando = TipoComando;
         _this.ON = ON;
         _this.OFF = OFF;
         return _this;
