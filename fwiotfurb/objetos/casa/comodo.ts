@@ -1,5 +1,10 @@
 import { Dispositivo } from './../dispositivo/dispositivo';
 
 export class Comodo {
-    constructor(public Nome: string, public Descricao: string, public Dispositivos: Array<Dispositivo>) {}
+    constructor(
+        public Id: string,
+        public Nome: string,
+        public Descricao: string,
+        public Dispositivos: Array<Dispositivo>
+    ) { }
 }

@@ -11,14 +11,14 @@ var __extends = (this && this.__extends) || (function () {
 import { Dispositivo } from './dispositivo';
 var DispositivoBluetooth = /** @class */ (function (_super) {
     __extends(DispositivoBluetooth, _super);
-    function DispositivoBluetooth(Nome, ComandoDispositivo, Estado, TipoDispositivo, EnderecoMAC, Id) {
-        var _this = _super.call(this, Nome, ComandoDispositivo, Estado, TipoDispositivo) || this;
+    function DispositivoBluetooth(Id, Nome, ComandoDispositivo, Estado, TipoDispositivo, EnderecoMAC) {
+        var _this = _super.call(this, Id, Nome, ComandoDispositivo, Estado, TipoDispositivo) || this;
+        _this.Id = Id;
         _this.Nome = Nome;
         _this.ComandoDispositivo = ComandoDispositivo;
         _this.Estado = Estado;
         _this.TipoDispositivo = TipoDispositivo;
         _this.EnderecoMAC = EnderecoMAC;
-        _this.Id = Id;
         return _this;
     }
     return DispositivoBluetooth;

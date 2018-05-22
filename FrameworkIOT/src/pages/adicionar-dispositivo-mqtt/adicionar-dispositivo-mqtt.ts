@@ -35,19 +35,14 @@ export class AdicionarDispositivoMqttPage {
     this.dbDispositivo.AdicionarDispositivo(
       new DispositivoMQTT(
         nome.value,
-        new ComandoONOFF(comandoON.value, comandoOFF.value),
+        new ComandoONOFF(comandoON.value, comandoOFF.value, ComandoONOFF.name),
         comandoOFF.value,
+        DispositivoMQTT.name,
         topico.value,
         topico.value,
         null
       )
     );
-
-    console.log(nome.value);
-    console.log(topico.value);
-    console.log(comandoON.value);
-    console.log(comandoOFF.value);
-
   }
 
 }

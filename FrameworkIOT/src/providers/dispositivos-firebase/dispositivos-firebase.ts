@@ -16,9 +16,11 @@ import { Observable } from 'rxjs/Observable';
 export class DispositivosFirebaseProvider {
 
   private listaDispositivos: AngularFireList<Dispositivo>;
+  private snapShot
 
   constructor(private db: AngularFireDatabase, private auth: AutenticacaoProvider) {
     this.listaDispositivos = this.db.list<Dispositivo>(auth.obterIdUsuario() + "/dispositivos");
+    this.snapShot = this.listaDispositivos.snapshotChanges();
   }
 
   /**
@@ -26,10 +28,11 @@ export class DispositivosFirebaseProvider {
   */
   public AdicionarDispositivo(dispositivo: Dispositivo) {
     let ref = this.listaDispositivos.push(dispositivo);
-    ref.set({id: ref.key});
   }
 
   public AtualizarEstadoDispositivo(dispositivo: Dispositivo) {
+    //this.listaDispositivos.query;
+    //this.listaDispositivos.update()
     //this.listaDispositivos.update(dispositivo.$key, dispositivo);
   }
 
@@ -38,12 +41,6 @@ export class DispositivosFirebaseProvider {
    * 
    */
   public ObterMeusDispositivos(): Observable<Dispositivo[]> {
-    this.listaDispositivos.snapshotChanges().subscribe(sn => {
-      console.log(sn[0].key);
-      console.log(sn[0].payload);
-      console.log(sn[0].type);
-    })
-
     return this.listaDispositivos.valueChanges();
   }
 

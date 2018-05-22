@@ -1,5 +1,6 @@
 var Casa = /** @class */ (function () {
-    function Casa(Nome, Descricao, Comodos) {
+    function Casa(Id, Nome, Descricao, Comodos) {
+        this.Id = Id;
         this.Nome = Nome;
         this.Descricao = Descricao;
         this.Comodos = Comodos;

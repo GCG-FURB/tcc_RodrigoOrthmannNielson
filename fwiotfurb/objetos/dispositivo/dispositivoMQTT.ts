@@ -5,6 +5,7 @@ import { ConfiguracaoMQTT } from '../configuracaoMQTT';
 
 export class DispositivoMQTT extends Dispositivo {
     constructor(
+        public Id: string,
         public Nome: string,
         public ComandoDispositivo: ComandoDispositivo,
         public Estado: string,
@@ -13,6 +14,6 @@ export class DispositivoMQTT extends Dispositivo {
         public TopicoInscricao: string,
         public Configuracao: ConfiguracaoMQTT
     ) {
-        super(Nome, ComandoDispositivo, Estado, TipoDispositivo);
+        super(Id, Nome, ComandoDispositivo, Estado, TipoDispositivo);
     }
 }

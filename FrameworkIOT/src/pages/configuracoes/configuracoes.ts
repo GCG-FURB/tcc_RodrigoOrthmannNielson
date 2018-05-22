@@ -46,7 +46,7 @@ export class ConfiguracoesPage {
 
     let novaConfiguracao: ConfiguracaoMQTT = {
       hostname: hostname.value,
-      porta: porta.value,
+      porta: +porta.value,
       idCliente: '0',
       configuracaoAutenticacao: {
         usuario: usuario.value,

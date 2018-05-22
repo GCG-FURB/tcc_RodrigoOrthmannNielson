@@ -37,10 +37,7 @@ export class MeusDispositivosPage {
   }
 
   mudarEstado(dispositivo: DispositivoMQTT | DispositivoBluetooth) {
-    console.log(dispositivo);
-    //if (dispositivo instanceof DispositivoMQTT) {
-      console.log(dispositivo.ComandoDispositivo);
-
+    if (dispositivo.TipoDispositivo == "DispositivoMQTT") {
       let dispositivoMqtt = dispositivo as DispositivoMQTT;
       let comandoONOFF = dispositivo.ComandoDispositivo as ComandoONOFF;
       if (dispositivoMqtt.Estado == comandoONOFF.OFF) {
@@ -51,8 +48,8 @@ export class MeusDispositivosPage {
         dispositivoMqtt.Estado = comandoONOFF.OFF;
         //this.dbDispositivos.
       }
-    // } else if (dispositivo instanceof DispositivoBluetooth) {
-    // }
+    } else if (dispositivo.TipoDispositivo == "DispositivoBluetooth") {
+    }
   }
 
   adicionarDispositivo() {
