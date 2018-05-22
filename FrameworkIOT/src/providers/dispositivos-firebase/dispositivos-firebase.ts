@@ -28,12 +28,12 @@ export class DispositivosFirebaseProvider {
   */
   public AdicionarDispositivo(dispositivo: Dispositivo) {
     let ref = this.listaDispositivos.push(dispositivo);
+    dispositivo.Id = ref.key;
+    this.listaDispositivos.update(dispositivo.Id, dispositivo);
   }
 
   public AtualizarEstadoDispositivo(dispositivo: Dispositivo) {
-    //this.listaDispositivos.query;
-    //this.listaDispositivos.update()
-    //this.listaDispositivos.update(dispositivo.$key, dispositivo);
+    this.listaDispositivos.update(dispositivo.Id, dispositivo);
   }
 
   /**

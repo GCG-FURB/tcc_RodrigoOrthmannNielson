@@ -34,8 +34,9 @@ export class AdicionarDispositivoMqttPage {
     let { nome, topico, comandoON, comandoOFF } = this.formulario.controls;
     this.dbDispositivo.AdicionarDispositivo(
       new DispositivoMQTT(
+        "0",
         nome.value,
-        new ComandoONOFF(comandoON.value, comandoOFF.value, ComandoONOFF.name),
+        new ComandoONOFF(ComandoONOFF.name, comandoON.value, comandoOFF.value),
         comandoOFF.value,
         DispositivoMQTT.name,
         topico.value,

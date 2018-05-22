@@ -1,3 +1,4 @@
+import { AdicionarDispositivoBluetoothPage } from './../adicionar-dispositivo-bluetooth/adicionar-dispositivo-bluetooth';
 import { ConfiguracoesPage } from './../configuracoes/configuracoes';
 import { Dispositivo, ConfiguracaoMQTT, FwMqttProvider, DispositivoBluetooth, DispositivoMQTT, ComandoONOFF, Casa, Comodo } from 'fwiotfurb';
 import { DispositivosFirebaseProvider } from './../../providers/dispositivos-firebase/dispositivos-firebase';
@@ -23,7 +24,14 @@ export class MeusDispositivosPage {
   listaDispositivos: Array<Dispositivo>;
   configuracaoMQTT: ConfiguracaoMQTT;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public fwMqtt: FwMqttProvider, private alertCtrl: AlertController, public dbDispositivos: DispositivosFirebaseProvider, public configMQTT: ConfiguracaoMqttProvider) {
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public fwMqtt: FwMqttProvider,
+    private alertCtrl: AlertController,
+    public dbDispositivos: DispositivosFirebaseProvider,
+    public configMQTT: ConfiguracaoMqttProvider
+  ) {
     this.listaDispositivos = new Array<Dispositivo>();
     this.dbDispositivos.ObterMeusDispositivos().subscribe(dispositivos => {
       this.listaDispositivos = dispositivos;
@@ -46,8 +54,8 @@ export class MeusDispositivosPage {
       } else {
         this.fwMqtt.publicar(comandoONOFF.OFF, dispositivoMqtt.TopicoPublicacao);
         dispositivoMqtt.Estado = comandoONOFF.OFF;
-        //this.dbDispositivos.
       }
+      this.dbDispositivos.AtualizarEstadoDispositivo(dispositivoMqtt);
     } else if (dispositivo.TipoDispositivo == "DispositivoBluetooth") {
     }
   }
@@ -100,6 +108,8 @@ export class MeusDispositivosPage {
               console.log(data);
               if (data == 'dispositivoMQTT') {
                 this.navCtrl.push(AdicionarDispositivoMqttPage);
+              } else if (data == 'dispositivoBluetooth') {
+                this.navCtrl.push(AdicionarDispositivoBluetoothPage);
               }
             }
           }

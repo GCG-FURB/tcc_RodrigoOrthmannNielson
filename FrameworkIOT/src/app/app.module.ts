@@ -1,3 +1,4 @@
+import { TelaControlePage } from './../pages/tela-controle/tela-controle';
 import { ConfiguracoesPage } from './../pages/configuracoes/configuracoes';
 import { AdicionarDispositivoMqttPage } from './../pages/adicionar-dispositivo-mqtt/adicionar-dispositivo-mqtt';
 import { MeusDispositivosPage } from './../pages/meus-dispositivos/meus-dispositivos';
@@ -30,6 +31,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms'; // <== add th
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { DispositivosFirebaseProvider } from '../providers/dispositivos-firebase/dispositivos-firebase';
 import { ConfiguracaoMqttProvider } from '../providers/configuracao-mqtt/configuracao-mqtt';
+import { AdicionarDispositivoBluetoothPage } from '../pages/adicionar-dispositivo-bluetooth/adicionar-dispositivo-bluetooth';
 
 @NgModule({
   declarations: [
@@ -40,7 +42,9 @@ import { ConfiguracaoMqttProvider } from '../providers/configuracao-mqtt/configu
     CadastroUsuarioPage,
     MeusDispositivosPage,
     AdicionarDispositivoMqttPage,
-    ConfiguracoesPage
+    AdicionarDispositivoBluetoothPage,
+    ConfiguracoesPage,
+    TelaControlePage
   ],
   imports: [
     BrowserModule,
@@ -59,7 +63,9 @@ import { ConfiguracaoMqttProvider } from '../providers/configuracao-mqtt/configu
     CadastroUsuarioPage,
     MeusDispositivosPage,
     AdicionarDispositivoMqttPage,
-    ConfiguracoesPage
+    AdicionarDispositivoBluetoothPage,
+    ConfiguracoesPage,
+    TelaControlePage
   ],
   providers: [
     BluetoothSerial,

@@ -1,3 +1,4 @@
+import { TelaControlePage } from './../pages/tela-controle/tela-controle';
 import { ConfiguracoesPage } from './../pages/configuracoes/configuracoes';
 import { MeusDispositivosPage } from './../pages/meus-dispositivos/meus-dispositivos';
 import { AutenticacaoProvider } from './../providers/autenticacao/autenticacao';
@@ -20,6 +21,7 @@ export class MyApp {
   constructor(private platform: Platform, private statusBar: StatusBar, splashScreen: SplashScreen, public menuCtrl: MenuController, public auth: AutenticacaoProvider) {
 
     this.paginas = [
+      { titulo: 'Controle', component: TelaControlePage},
       { titulo: 'Home Page', component: HomePage },
       { titulo: 'Meus Dispositivos', component: MeusDispositivosPage},
       { titulo: 'Configurações', component: ConfiguracoesPage}

@@ -93,7 +93,7 @@ export class FwBluetoothProvider {
         (dispositivos) => {
           let dispositivosPareados: Array<DispositivoBluetooth> = new Array<DispositivoBluetooth>();
           dispositivos.forEach(d => {
-            dispositivosPareados.push(new DispositivoBluetooth(null, d.name, null, null, null, d.address, d.id));
+            dispositivosPareados.push(new DispositivoBluetooth(null, d.name, null, null, null, d.address));
           });
           resolve(dispositivosPareados);
         }
@@ -114,7 +114,7 @@ export class FwBluetoothProvider {
         .then((dispositivos) => {
           let dispositivosNaoPareados: Array<DispositivoBluetooth> = new Array<DispositivoBluetooth>();
           dispositivos.forEach(d => {
-            dispositivosNaoPareados.push(new DispositivoBluetooth(null, d.name, null, null, null, d.address, d.id));
+            dispositivosNaoPareados.push(new DispositivoBluetooth(null, d.name, null, null, null, d.address));
           });
           resolve(dispositivosNaoPareados);
         });
