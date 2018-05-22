@@ -1,6 +1,6 @@
 {
   "name": "FrameworkIOT",
-  "app_id": "com.angularfirebase.frameworkfurb",
+  "app_id": "frameworkfurb.firebaseapp.com",
   "type": "ionic-angular",
   "integrations": {
     "cordova": {}
