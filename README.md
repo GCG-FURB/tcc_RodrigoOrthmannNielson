@@ -239,3 +239,96 @@ Lista os dispositivos não pareados com o celular.
     	this.fwComunicacao.fwBluetooth.listarDispositivosNaoPareados()
       	.then((dispositivos) => listaDispositivosNaoPareados = dispositivos);
 ```
+
+# Estruturas adicionais
+* * * 
+Além dos métodos de comunicação, o framework também objetos para facilitar o uso do framework.
+
+### Dispositivo
+
+É a estrutura de um dispositivo genérico, sem especificação do seu tipo de comunicação, possui as propriedades:
+
+```
+:::typescript
+        public Id: string,
+        public Nome: string, // Nome do dispositivo
+        public ComandoDispositivo: ComandoDispositivo, // Comando que o dispositivo utiliza
+        public Estado: string, // Estado atual do dispositivo
+        public TipoDispositivo: string // Dipo do dispositivo
+```
+
+### DispositivoMQTT
+
+Herda Dispositivo. Possui as configurações necessárias para comunicação via MQTT.
+
+```
+:::typescript
+        public Id: string,
+        public Nome: string,
+        public ComandoDispositivo: ComandoDispositivo,
+        public Estado: string,
+        public TipoDispositivo: string, // deve ser DispositivoMQTT
+        public TopicoPublicacao: string, // Tópico em que irá publicar
+        public TopicoInscricao: string, // Tópico em que irá se inscrever
+        public Configuracao: ConfiguracaoMQTT // Configuração MQTT
+```
+
+
+### DispositivoBluetooth
+
+Herda dispositivo. Possui o endereço MAC do dispositivo bluetooth.
+
+```
+:::typescript
+        public Id: string,
+        public Nome: string,
+        public ComandoDispositivo: ComandoDispositivo,
+        public Estado: string,
+        public TipoDispositivo: string, // deve ser DispositivoBluetooth
+        public EnderecoMAC: string // endereço MAC
+```
+
+### ComandoDispositivo
+
+Classe genérica que contém as informações sobre os comandos que o dispositivo pode enviar. Só possui uma propriedade que é o TipoComando.
+
+```
+:::typescript
+        public TipoComando: string
+```
+
+### ComandoONOFF
+
+Herda ComandoDispositivo. Classe utilizada por dispositivos que possuem apenas dois comandos, ON e OFF, que tem a funcionalidade de interruptor.
+
+```
+:::typescript
+        public TipoComando: string, // Deve ser ComandoONOFF
+        public ON: string, // Comando para ligar
+        public OFF: string // Comando para desligar
+```
+
+### Comodo
+
+Estrutura de um cômodo de uma casa. Utilizado apenas para subdividir os dispositivos.
+
+```
+:::typescript
+        public Id: string,
+        public Nome: string, // Nome do cômodo
+        public Descricao: string, // Descrição
+        public Dispositivos: Array<Dispositivo> // Lista de dispositivos pertencentes à este cômodo
+```
+
+
+### Casa
+
+Estrutura de uma casa, agrega vários cômodos.
+
+```
+:::typescript
+        public Id: string,
+        public Nome: string, // Nome da casa
+        public Descricao: string, // Descrição
+        public Comodos: Array<Comodo> // Lista de cômodos da casa
+```
