@@ -22,7 +22,7 @@ export class MyApp {
 
     this.paginas = [
       { titulo: 'Controle', component: TelaControlePage},
-      { titulo: 'Home Page', component: HomePage },
+      //{ titulo: 'Home Page', component: HomePage },
       { titulo: 'Meus Dispositivos', component: MeusDispositivosPage},
       { titulo: 'Configurações', component: ConfiguracoesPage}
     ];
@@ -45,7 +45,7 @@ export class MyApp {
       .subscribe(
         user => {
           if (user) {
-            this.rootPage = HomePage;
+            this.rootPage = TelaControlePage;
           } else {
             this.rootPage = LoginPage;
           }

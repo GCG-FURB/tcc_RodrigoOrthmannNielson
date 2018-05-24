@@ -18,9 +18,12 @@ var FwBluetoothProvider = /** @class */ (function () {
      * Ativa o bluetooth do celular
      */
     FwBluetoothProvider.prototype.ativarBluetooth = function () {
-        this.bluetoothSerial.enable()
-            .then(function () { return console.log('Bluetooth ativado'); })
-            .catch(function (err) { return alert(err); });
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            _this.bluetoothSerial.enable()
+                .then(function () { return resolve(true); })
+                .catch(function (err) { return reject(false); });
+        });
     };
     /**
      * Valida se existe algum dispositivo conectado

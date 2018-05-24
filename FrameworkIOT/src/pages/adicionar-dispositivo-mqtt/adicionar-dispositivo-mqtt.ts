@@ -20,7 +20,12 @@ export class AdicionarDispositivoMqttPage {
 
   public formulario: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, public navCtrl: NavController, public navParams: NavParams, public dbDispositivo: DispositivosFirebaseProvider) {
+  constructor(
+    private formBuilder: FormBuilder,
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public dbDispositivo: DispositivosFirebaseProvider
+  ) {
     this.formulario = this.formBuilder.group({
       nome: ['', Validators.required],
       topico: ['', Validators.required],

@@ -1,6 +1,6 @@
 import { AdicionarDispositivoBluetoothPage } from './../adicionar-dispositivo-bluetooth/adicionar-dispositivo-bluetooth';
 import { ConfiguracoesPage } from './../configuracoes/configuracoes';
-import { Dispositivo, ConfiguracaoMQTT, FwMqttProvider, DispositivoBluetooth, DispositivoMQTT, ComandoONOFF, Casa, Comodo } from 'fwiotfurb';
+import { Dispositivo, ConfiguracaoMQTT, FwMqttProvider, DispositivoBluetooth, DispositivoMQTT, Casa, Comodo, ComandoONOFF, FwBluetoothProvider } from 'fwiotfurb';
 import { DispositivosFirebaseProvider } from './../../providers/dispositivos-firebase/dispositivos-firebase';
 import { AdicionarDispositivoMqttPage } from './../adicionar-dispositivo-mqtt/adicionar-dispositivo-mqtt';
 import { Component } from '@angular/core';
@@ -21,20 +21,27 @@ import { ConfiguracaoMqttProvider } from '../../providers/configuracao-mqtt/conf
 })
 export class MeusDispositivosPage {
 
-  listaDispositivos: Array<Dispositivo>;
+  listaDispositivosMQTT: Array<Dispositivo> = new Array<Dispositivo>();
+  listaDispositivosBluetooth: Array<Dispositivo> = new Array<Dispositivo>();
   configuracaoMQTT: ConfiguracaoMQTT;
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     public fwMqtt: FwMqttProvider,
+    public fwBluetooth: FwBluetoothProvider,
     private alertCtrl: AlertController,
     public dbDispositivos: DispositivosFirebaseProvider,
     public configMQTT: ConfiguracaoMqttProvider
   ) {
-    this.listaDispositivos = new Array<Dispositivo>();
     this.dbDispositivos.ObterMeusDispositivos().subscribe(dispositivos => {
-      this.listaDispositivos = dispositivos;
+      dispositivos.forEach(disp => {
+        if (disp.TipoDispositivo == "DispositivoMQTT") {
+          this.listaDispositivosMQTT.push(disp);
+        } else if (disp.TipoDispositivo == "DispositivoBluetooth") {
+          this.listaDispositivosBluetooth.push(disp);
+        }
+      });
     });
     configMQTT.ObterConfiguracao().subscribe(configuracao => {
       this.configuracaoMQTT = configuracao;
@@ -42,22 +49,6 @@ export class MeusDispositivosPage {
         this.fwMqtt.configurarMQTT(this.configuracaoMQTT);
       }
     })
-  }
-
-  mudarEstado(dispositivo: DispositivoMQTT | DispositivoBluetooth) {
-    if (dispositivo.TipoDispositivo == "DispositivoMQTT") {
-      let dispositivoMqtt = dispositivo as DispositivoMQTT;
-      let comandoONOFF = dispositivo.ComandoDispositivo as ComandoONOFF;
-      if (dispositivoMqtt.Estado == comandoONOFF.OFF) {
-        this.fwMqtt.publicar(comandoONOFF.ON, dispositivoMqtt.TopicoPublicacao);
-        dispositivoMqtt.Estado = comandoONOFF.ON;
-      } else {
-        this.fwMqtt.publicar(comandoONOFF.OFF, dispositivoMqtt.TopicoPublicacao);
-        dispositivoMqtt.Estado = comandoONOFF.OFF;
-      }
-      this.dbDispositivos.AtualizarEstadoDispositivo(dispositivoMqtt);
-    } else if (dispositivo.TipoDispositivo == "DispositivoBluetooth") {
-    }
   }
 
   adicionarDispositivo() {

@@ -6,6 +6,26 @@
 
 <ion-content padding>
 
-  <button ion-button (click)="buscarDispositivo()">Buscar</button>
+  <button ion-button block (click)="buscarDispositivo()">Buscar dispositivo bluetooth</button>
+
+  
+  <form *ngIf="macNovoDispositivo != null" [formGroup]="formulario" (ngSubmit)="adicionarDispositivo()">
+    <ion-item>
+      <ion-label stacked>Nome dispositivo</ion-label>
+      <ion-input type="text" formControlName="nome"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked>Comando ON </ion-label>
+      <ion-input formControlName="comandoON"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked>Comando OFF</ion-label>
+      <ion-input formControlName="comandoOFF"></ion-input>
+    </ion-item>
+
+    <button ion-button block type="submit" [disabled]="!formulario.valid">Submit</button>
+  </form>
 
 </ion-content>

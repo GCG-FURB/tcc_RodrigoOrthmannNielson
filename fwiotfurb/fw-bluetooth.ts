@@ -13,10 +13,12 @@ export class FwBluetoothProvider {
   /**
    * Ativa o bluetooth do celular
    */
-  ativarBluetooth() {
-    this.bluetoothSerial.enable()
-      .then(() => console.log('Bluetooth ativado'))
-      .catch((err) => alert(err));
+  ativarBluetooth(): Promise<boolean> {
+    return new Promise((resolve, reject) => {
+      this.bluetoothSerial.enable()
+        .then(() => resolve(true))
+        .catch((err) => reject(false));
+    });
   }
 
   /**
@@ -45,8 +47,8 @@ export class FwBluetoothProvider {
    */
   enviarMensagem(mensagem: string, funcaoSucesso?: () => void, funcaoErro?: () => void) {
     this.bluetoothSerial.write(mensagem.toString())
-      .then((success) => funcaoSucesso == undefined? console.log('Enviou a mensagem com sucesso' + success) : funcaoSucesso)
-      .catch((err) => funcaoErro == undefined? console.log('Erro ao enviar mensagem' + err) : funcaoErro);
+      .then((success) => funcaoSucesso == undefined ? console.log('Enviou a mensagem com sucesso' + success) : funcaoSucesso)
+      .catch((err) => funcaoErro == undefined ? console.log('Erro ao enviar mensagem' + err) : funcaoErro);
   }
 
   /**

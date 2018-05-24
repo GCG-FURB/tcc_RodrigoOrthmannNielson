@@ -1,8 +1,17 @@
 <ion-header>
-		<cabecalho-customizado [titulo]="'Tela de controle'"></cabecalho-customizado>
-	</ion-header>
+	<cabecalho-customizado [titulo]="'Tela de controle'"></cabecalho-customizado>
+</ion-header>
 
 
 <ion-content padding>
-
+	<ion-list>
+		<ion-item *ngFor="let dispMQTT of listaDispositivosMQTT;let index = index;trackBy:trackByIndex">
+			<ion-label>{{dispMQTT.Nome}}</ion-label>
+			<ion-toggle [(ngModel)]="listaEstadoDispositivosMQTT[index]" (ionChange)="mudarEstado(dispMQTT)"></ion-toggle>
+		</ion-item>
+		<ion-item *ngFor="let dispBT of listaDispositivosBluetooth;let index = index;trackBy:trackByIndex">
+			<ion-label>{{dispBT.Nome}}</ion-label>
+			<ion-toggle [(ngModel)]="listaEstadoDispositivosBluetooth[index]" (ionChange)="mudarEstado(dispBT)" ></ion-toggle>
+		</ion-item>
+	</ion-list>
 </ion-content>
