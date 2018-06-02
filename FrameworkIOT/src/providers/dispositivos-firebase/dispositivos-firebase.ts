@@ -16,11 +16,9 @@ import { Observable } from 'rxjs/Observable';
 export class DispositivosFirebaseProvider {
 
   private listaDispositivos: AngularFireList<Dispositivo>;
-  private snapShot
 
   constructor(private db: AngularFireDatabase, private auth: AutenticacaoProvider) {
     this.listaDispositivos = this.db.list<Dispositivo>(auth.obterIdUsuario() + "/dispositivos");
-    this.snapShot = this.listaDispositivos.snapshotChanges();
   }
 
   /**
@@ -38,7 +36,6 @@ export class DispositivosFirebaseProvider {
 
   /**
    * ObterMeusDispositivos
-   * 
    */
   public ObterMeusDispositivos(): Observable<Dispositivo[]> {
     return this.listaDispositivos.valueChanges();

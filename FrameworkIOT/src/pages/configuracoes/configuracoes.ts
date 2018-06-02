@@ -1,3 +1,4 @@
+import { AutenticacaoProvider } from './../../providers/autenticacao/autenticacao';
 import { ConfiguracaoMQTT } from 'fwiotfurb';
 import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -26,7 +27,8 @@ export class ConfiguracoesPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     public configMQTT: ConfiguracaoMqttProvider,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController,
+    private auth: AutenticacaoProvider
   ) {
 
     this.formulario = this.formBuilder.group({
@@ -36,9 +38,9 @@ export class ConfiguracoesPage {
       senha: ['', Validators.required]
     });
 
-    configMQTT.ObterConfiguracao().subscribe(configuracao => {
+    this.auth.adicionarInscricao(configMQTT.ObterConfiguracao().subscribe(configuracao => {
       this.configuracaoAtual = configuracao;
-    })
+    }));
   }
 
   atualizarConfiguracaoMQTT() {

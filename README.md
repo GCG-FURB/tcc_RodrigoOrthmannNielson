@@ -31,6 +31,7 @@ Tanto para o ambiente Mqtt quanto Bluetooth, é necessário importar os seus pro
 ```
 :::typescript
 	import { FwMqttProvider, FwBluetoothProvider } from 'fwiotfurb';
+	import { BluetoothSerial } from '@ionic-native/bluetooth-serial';
 
 	...
 	

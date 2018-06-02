@@ -1,8 +1,9 @@
+import { AutenticacaoProvider } from './../../providers/autenticacao/autenticacao';
 import { ConfiguracaoMqttProvider } from './../../providers/configuracao-mqtt/configuracao-mqtt';
 import { DispositivosFirebaseProvider } from './../../providers/dispositivos-firebase/dispositivos-firebase';
 import { DispositivoMQTT, DispositivoBluetooth, Dispositivo, ConfiguracaoMQTT, FwMqttProvider, FwBluetoothProvider, ComandoONOFF } from 'fwiotfurb';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, LoadingController, Loading } from 'ionic-angular';
 
 /**
  * Generated class for the TelaControlePage page.
@@ -26,6 +27,8 @@ export class TelaControlePage {
   configuracaoMQTT: ConfiguracaoMQTT;
 
   public testes: number = 0;
+  public statusConexao: number = 0;
+  public loading: Loading;
 
   constructor(
     public navCtrl: NavController,
@@ -34,9 +37,11 @@ export class TelaControlePage {
     public fwBluetooth: FwBluetoothProvider,
     private alertCtrl: AlertController,
     public dbDispositivos: DispositivosFirebaseProvider,
-    public configMQTT: ConfiguracaoMqttProvider
+    public configMQTT: ConfiguracaoMqttProvider,
+    private auth: AutenticacaoProvider,
+    public loadingCtrl: LoadingController,
   ) {
-    this.dbDispositivos.ObterMeusDispositivos().subscribe(dispositivos => {
+    auth.adicionarInscricao(this.dbDispositivos.ObterMeusDispositivos().subscribe(dispositivos => {
       this.listaDispositivosMQTT = new Array<Dispositivo>();
       this.listaEstadoDispositivosMQTT = new Array<boolean>();
       this.listaDispositivosBluetooth = new Array<Dispositivo>();
@@ -51,14 +56,31 @@ export class TelaControlePage {
           this.listaEstadoDispositivosBluetooth.push(disp.Estado == (disp.ComandoDispositivo as ComandoONOFF).ON)
         }
       });
-    });
+    }));
 
-    configMQTT.ObterConfiguracao().subscribe(configuracao => {
+    auth.adicionarInscricao(configMQTT.ObterConfiguracao().subscribe(configuracao => {
       this.configuracaoMQTT = configuracao;
       if (this.configuracaoMQTT != null) {
-        this.fwMqtt.configurarMQTT(this.configuracaoMQTT);
+        this.loading = this.loadingCtrl.create({
+          content: 'Conectando ao MQTT'
+        });
+        if (!this.fwMqtt.clienteConectado()) {
+          this.loading.present();
+          this.fwMqtt.configurarMQTT(this.configuracaoMQTT);
+          this.timeoutConexaoMQTT();
+        }
       }
-    })
+    }));
+  }
+
+  timeoutConexaoMQTT() {
+    setTimeout(() => {
+      if (!this.fwMqtt.clienteConectado()) {
+        this.timeoutConexaoMQTT();
+      } else {
+        this.loading.dismiss();
+      }
+    }, 1000);
   }
 
   trackByIndex(index: number, obj: any): any {

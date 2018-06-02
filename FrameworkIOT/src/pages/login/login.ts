@@ -1,3 +1,4 @@
+
 import { AutenticacaoProvider } from './../../providers/autenticacao/autenticacao';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
@@ -53,13 +54,4 @@ export class LoginPage {
   signup(){
     this.navCtrl.push(CadastroUsuarioPage);
   }
-
-  loginWithGoogle() {
-    this.auth.loginGoogle()
-      .then(
-        () => this.navCtrl.setRoot(HomePage),
-        error => console.log(error.message)
-      );
-  }
-
 }

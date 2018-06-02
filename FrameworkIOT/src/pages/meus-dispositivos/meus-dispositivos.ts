@@ -1,3 +1,4 @@
+import { AutenticacaoProvider } from './../../providers/autenticacao/autenticacao';
 import { AdicionarDispositivoBluetoothPage } from './../adicionar-dispositivo-bluetooth/adicionar-dispositivo-bluetooth';
 import { ConfiguracoesPage } from './../configuracoes/configuracoes';
 import { Dispositivo, ConfiguracaoMQTT, FwMqttProvider, DispositivoBluetooth, DispositivoMQTT, Casa, Comodo, ComandoONOFF, FwBluetoothProvider } from 'fwiotfurb';
@@ -21,8 +22,8 @@ import { ConfiguracaoMqttProvider } from '../../providers/configuracao-mqtt/conf
 })
 export class MeusDispositivosPage {
 
-  listaDispositivosMQTT: Array<Dispositivo> = new Array<Dispositivo>();
-  listaDispositivosBluetooth: Array<Dispositivo> = new Array<Dispositivo>();
+  listaDispositivosMQTT: Array<Dispositivo>;
+  listaDispositivosBluetooth: Array<Dispositivo>;
   configuracaoMQTT: ConfiguracaoMQTT;
 
   constructor(
@@ -32,9 +33,12 @@ export class MeusDispositivosPage {
     public fwBluetooth: FwBluetoothProvider,
     private alertCtrl: AlertController,
     public dbDispositivos: DispositivosFirebaseProvider,
-    public configMQTT: ConfiguracaoMqttProvider
+    public configMQTT: ConfiguracaoMqttProvider,
+    private auth: AutenticacaoProvider
   ) {
-    this.dbDispositivos.ObterMeusDispositivos().subscribe(dispositivos => {
+    this.auth.adicionarInscricao(this.dbDispositivos.ObterMeusDispositivos().subscribe(dispositivos => {
+      this.listaDispositivosMQTT = new Array<Dispositivo>();
+      this.listaDispositivosBluetooth = new Array<Dispositivo>();
       dispositivos.forEach(disp => {
         if (disp.TipoDispositivo == "DispositivoMQTT") {
           this.listaDispositivosMQTT.push(disp);
@@ -42,13 +46,10 @@ export class MeusDispositivosPage {
           this.listaDispositivosBluetooth.push(disp);
         }
       });
-    });
-    configMQTT.ObterConfiguracao().subscribe(configuracao => {
+    }));
+    this.auth.adicionarInscricao(configMQTT.ObterConfiguracao().subscribe(configuracao => {
       this.configuracaoMQTT = configuracao;
-      if (this.configuracaoMQTT != null) {
-        this.fwMqtt.configurarMQTT(this.configuracaoMQTT);
-      }
-    })
+    }));
   }
 
   adicionarDispositivo() {
@@ -89,9 +90,6 @@ export class MeusDispositivosPage {
         buttons: [
           {
             text: 'Cancelar',
-            handler: data => {
-              console.log('Fechar');
-            }
           },
           {
             text: 'Confirmar',

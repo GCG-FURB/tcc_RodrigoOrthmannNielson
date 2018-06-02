@@ -1,7 +1,7 @@
 import { DispositivosFirebaseProvider } from './../../providers/dispositivos-firebase/dispositivos-firebase';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, Button } from 'ionic-angular';
 import { Dispositivo, DispositivoMQTT, ComandoDispositivo, ComandoONOFF } from 'fwiotfurb';
 
 /**
@@ -24,7 +24,8 @@ export class AdicionarDispositivoMqttPage {
     private formBuilder: FormBuilder,
     public navCtrl: NavController,
     public navParams: NavParams,
-    public dbDispositivo: DispositivosFirebaseProvider
+    public dbDispositivo: DispositivosFirebaseProvider,
+    private alertCtrl: AlertController
   ) {
     this.formulario = this.formBuilder.group({
       nome: ['', Validators.required],
@@ -49,6 +50,16 @@ export class AdicionarDispositivoMqttPage {
         null
       )
     );
+
+    this.alertCtrl.create({
+      message: "Dispositivo MQTT adicionado",
+      buttons: [{
+        text: "OK",
+        handler: () => {
+          this.navCtrl.pop();
+        }
+      }]
+    }).present();
   }
 
 }

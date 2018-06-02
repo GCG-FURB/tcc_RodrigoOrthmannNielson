@@ -1,16 +1,25 @@
+import { DispositivosFirebaseProvider } from './../dispositivos-firebase/dispositivos-firebase';
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
 import AuthProvider = firebase.auth.AuthProvider;
+import { ConfiguracaoMqttProvider } from '../configuracao-mqtt/configuracao-mqtt';
+import { Subscription } from 'rxjs/Subscription';
 
 @Injectable()
 export class AutenticacaoProvider {
 	private user: firebase.User;
+	private listaInscricoes: Array<Subscription>;
 
 	constructor(public autenticacaoFirebase: AngularFireAuth) {
+		this.listaInscricoes = new Array<Subscription>();
 		autenticacaoFirebase.authState.subscribe(user => {
 			this.user = user;
 		});
+	}
+
+	adicionarInscricao(inscricao: Subscription) {
+		this.listaInscricoes.push(inscricao);
 	}
 
 	loginEmail(credentials) {
@@ -35,12 +44,11 @@ export class AutenticacaoProvider {
   }
 
   deslogar(): Promise<void> {
-    return this.autenticacaoFirebase.auth.signOut();
+		this.listaInscricoes.forEach(inscricao => {
+			inscricao.unsubscribe();
+		})
+		return this.autenticacaoFirebase.auth.signOut();
   }
-
-  loginGoogle() {
-		return this.oauthLogin(new firebase.auth.GoogleAuthProvider());
-}
 
 private oauthLogin(provider: AuthProvider) {
 	if (!(<any>window).cordova) {
