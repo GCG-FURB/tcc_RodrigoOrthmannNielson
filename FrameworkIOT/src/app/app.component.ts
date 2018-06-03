@@ -1,3 +1,5 @@
+import { MeusComodosPage } from './../pages/meus-comodos/meus-comodos';
+import { MinhasCasasPage } from './../pages/minhas-casas/minhas-casas';
 import { TelaControlePage } from './../pages/tela-controle/tela-controle';
 import { ConfiguracoesPage } from './../pages/configuracoes/configuracoes';
 import { MeusDispositivosPage } from './../pages/meus-dispositivos/meus-dispositivos';
@@ -22,8 +24,9 @@ export class MyApp {
 
     this.paginas = [
       { titulo: 'Controle', component: TelaControlePage},
-      //{ titulo: 'Home Page', component: HomePage },
-      { titulo: 'Meus Dispositivos', component: MeusDispositivosPage},
+      { titulo: 'Casas', component: MinhasCasasPage},
+      { titulo: 'Cômodos', component: MeusComodosPage},
+      { titulo: 'Dispositivos', component: MeusDispositivosPage},
       { titulo: 'Configurações', component: ConfiguracoesPage}
     ];
 
@@ -69,7 +72,8 @@ export class MyApp {
   logout() {
     this.menuCtrl.close();
     this.auth.deslogar();
-    this.nav.setRoot(HomePage);
+    this.nav.setRoot(LoginPage);
+    window.location.reload();
   }
   // initializeApp() {
   //   this.rootPage = LoginPage;

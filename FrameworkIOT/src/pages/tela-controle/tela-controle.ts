@@ -1,3 +1,4 @@
+import { UsuariosFirebaseProvider } from './../../providers/usuarios-firebase/usuarios-firebase';
 import { AutenticacaoProvider } from './../../providers/autenticacao/autenticacao';
 import { ConfiguracaoMqttProvider } from './../../providers/configuracao-mqtt/configuracao-mqtt';
 import { DispositivosFirebaseProvider } from './../../providers/dispositivos-firebase/dispositivos-firebase';
@@ -40,37 +41,42 @@ export class TelaControlePage {
     public configMQTT: ConfiguracaoMqttProvider,
     private auth: AutenticacaoProvider,
     public loadingCtrl: LoadingController,
+    public dbUsuarios: UsuariosFirebaseProvider
   ) {
-    auth.adicionarInscricao(this.dbDispositivos.ObterMeusDispositivos().subscribe(dispositivos => {
-      this.listaDispositivosMQTT = new Array<Dispositivo>();
+    this.listaDispositivosMQTT = new Array<Dispositivo>();
       this.listaEstadoDispositivosMQTT = new Array<boolean>();
       this.listaDispositivosBluetooth = new Array<Dispositivo>();
       this.listaEstadoDispositivosBluetooth = new Array<boolean>();
+    // auth.adicionarInscricao(this.dbDispositivos.ObterMeusDispositivos().subscribe(dispositivos => {
+    //   this.listaDispositivosMQTT = new Array<Dispositivo>();
+    //   this.listaEstadoDispositivosMQTT = new Array<boolean>();
+    //   this.listaDispositivosBluetooth = new Array<Dispositivo>();
+    //   this.listaEstadoDispositivosBluetooth = new Array<boolean>();
 
-      dispositivos.forEach(disp => {
-        if (disp.TipoDispositivo == "DispositivoMQTT") {
-          this.listaDispositivosMQTT.push(disp);
-          this.listaEstadoDispositivosMQTT.push(disp.Estado == (disp.ComandoDispositivo as ComandoONOFF).ON)
-        } else if (disp.TipoDispositivo == "DispositivoBluetooth") {
-          this.listaDispositivosBluetooth.push(disp);
-          this.listaEstadoDispositivosBluetooth.push(disp.Estado == (disp.ComandoDispositivo as ComandoONOFF).ON)
-        }
-      });
-    }));
+    //   dispositivos.forEach(disp => {
+    //     if (disp.TipoDispositivo == "DispositivoMQTT") {
+    //       this.listaDispositivosMQTT.push(disp);
+    //       this.listaEstadoDispositivosMQTT.push(disp.Estado == (disp.ComandoDispositivo as ComandoONOFF).ON)
+    //     } else if (disp.TipoDispositivo == "DispositivoBluetooth") {
+    //       this.listaDispositivosBluetooth.push(disp);
+    //       this.listaEstadoDispositivosBluetooth.push(disp.Estado == (disp.ComandoDispositivo as ComandoONOFF).ON)
+    //     }
+    //   });
+    // }));
 
-    auth.adicionarInscricao(configMQTT.ObterConfiguracao().subscribe(configuracao => {
-      this.configuracaoMQTT = configuracao;
-      if (this.configuracaoMQTT != null) {
-        this.loading = this.loadingCtrl.create({
-          content: 'Conectando ao MQTT'
-        });
-        if (!this.fwMqtt.clienteConectado()) {
-          this.loading.present();
-          this.fwMqtt.configurarMQTT(this.configuracaoMQTT);
-          this.timeoutConexaoMQTT();
-        }
-      }
-    }));
+    // auth.adicionarInscricao(configMQTT.ObterConfiguracao().subscribe(configuracao => {
+    //   this.configuracaoMQTT = configuracao;
+    //   if (this.configuracaoMQTT != null) {
+    //     this.loading = this.loadingCtrl.create({
+    //       content: 'Conectando ao MQTT'
+    //     });
+    //     if (!this.fwMqtt.clienteConectado()) {
+    //       this.loading.present();
+    //       this.fwMqtt.configurarMQTT(this.configuracaoMQTT);
+    //       this.timeoutConexaoMQTT();
+    //     }
+    //   }
+    // }));
   }
 
   timeoutConexaoMQTT() {

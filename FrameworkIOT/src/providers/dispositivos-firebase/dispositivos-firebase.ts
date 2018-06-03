@@ -3,8 +3,9 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
-import { Dispositivo, DispositivoMQTT } from 'fwiotfurb';
+import { Dispositivo, DispositivoMQTT, Casa } from 'fwiotfurb';
 import { Observable } from 'rxjs/Observable';
+import { UsuariosFirebaseProvider } from '../usuarios-firebase/usuarios-firebase';
 
 /*
   Generated class for the DispositivosFirebaseProvider provider.
@@ -18,7 +19,7 @@ export class DispositivosFirebaseProvider {
   private listaDispositivos: AngularFireList<Dispositivo>;
 
   constructor(private db: AngularFireDatabase, private auth: AutenticacaoProvider) {
-    this.listaDispositivos = this.db.list<Dispositivo>(auth.obterIdUsuario() + "/dispositivos");
+    //this.listaDispositivos = this.db.list<Dispositivo>(auth.obterIdUsuario() + "/dispositivos");
   }
 
   /**
@@ -37,8 +38,8 @@ export class DispositivosFirebaseProvider {
   /**
    * ObterMeusDispositivos
    */
-  public ObterMeusDispositivos(): Observable<Dispositivo[]> {
-    return this.listaDispositivos.valueChanges();
-  }
+  //public ObterMeusDispositivos(casaAtual: Casa): Observable<Dispositivo[]> {
+    //return this.listaDispositivos.valueChanges();
+  //}
 
 }

@@ -19,7 +19,7 @@ export class ConfiguracaoMqttProvider {
   private configuracao: AngularFireObject<ConfiguracaoMQTT>;
 
   constructor(private db: AngularFireDatabase, private auth: AutenticacaoProvider) {
-    this.configuracao = this.db.object<ConfiguracaoMQTT>(auth.obterIdUsuario() + "/configuracaoMQTT");
+    this.configuracao = this.db.object<ConfiguracaoMQTT>("usuarios/" + auth.obterIdUsuario() + "/configuracaoMQTT");
   }
 
   /**

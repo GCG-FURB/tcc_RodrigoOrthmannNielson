@@ -5,14 +5,14 @@
 
 <ion-content padding>
 
-  <form [formGroup]="formulario" (ngSubmit)="adicionarDispositivo()">
+  <form  *ngIf="CasaAtual != null && CasaAtual.Comodos != null" [formGroup]="formulario" (ngSubmit)="adicionarDispositivo()">
     <ion-item>
       <ion-label stacked>Nome dispositivo</ion-label>
       <ion-input type="text" formControlName="nome"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label stacked>Tópico</ion-label>
-        <ion-input formControlName="topico"></ion-input>
+      <ion-input formControlName="topico"></ion-input>
     </ion-item>
 
     <ion-item>

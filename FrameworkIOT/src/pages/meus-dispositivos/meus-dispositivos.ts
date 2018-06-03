@@ -7,6 +7,7 @@ import { AdicionarDispositivoMqttPage } from './../adicionar-dispositivo-mqtt/ad
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { ConfiguracaoMqttProvider } from '../../providers/configuracao-mqtt/configuracao-mqtt';
+import { UsuariosFirebaseProvider } from '../../providers/usuarios-firebase/usuarios-firebase';
 
 /**
  * Generated class for the MeusDispositivosPage page.
@@ -25,6 +26,7 @@ export class MeusDispositivosPage {
   listaDispositivosMQTT: Array<Dispositivo>;
   listaDispositivosBluetooth: Array<Dispositivo>;
   configuracaoMQTT: ConfiguracaoMQTT;
+  public CasaAtual: Casa;
 
   constructor(
     public navCtrl: NavController,
@@ -34,19 +36,13 @@ export class MeusDispositivosPage {
     private alertCtrl: AlertController,
     public dbDispositivos: DispositivosFirebaseProvider,
     public configMQTT: ConfiguracaoMqttProvider,
-    private auth: AutenticacaoProvider
+    private auth: AutenticacaoProvider,
+    private usuarioDb: UsuariosFirebaseProvider
   ) {
-    this.auth.adicionarInscricao(this.dbDispositivos.ObterMeusDispositivos().subscribe(dispositivos => {
-      this.listaDispositivosMQTT = new Array<Dispositivo>();
-      this.listaDispositivosBluetooth = new Array<Dispositivo>();
-      dispositivos.forEach(disp => {
-        if (disp.TipoDispositivo == "DispositivoMQTT") {
-          this.listaDispositivosMQTT.push(disp);
-        } else if (disp.TipoDispositivo == "DispositivoBluetooth") {
-          this.listaDispositivosBluetooth.push(disp);
-        }
-      });
+    this.auth.adicionarInscricao(this.usuarioDb.obterCasaAtual().subscribe(casa => {
+      this.CasaAtual = casa;
     }));
+
     this.auth.adicionarInscricao(configMQTT.ObterConfiguracao().subscribe(configuracao => {
       this.configuracaoMQTT = configuracao;
     }));

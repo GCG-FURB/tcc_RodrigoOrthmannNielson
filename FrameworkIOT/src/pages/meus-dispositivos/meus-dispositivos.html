@@ -1,27 +1,19 @@
 <ion-header>
-		<cabecalho-customizado [titulo]="'Meus dispositivos'"></cabecalho-customizado>
-	</ion-header>
+  <cabecalho-customizado [titulo]="'Dispositivos'"></cabecalho-customizado>
+</ion-header>
 
 <ion-content padding>
 
-  <!-- <ion-list>
-    <ion-item *ngFor="let disp of listaDispositivos">
-      {{disp.Nome}} - {{disp.TipoDispositivo}}
-    </ion-item>
-  </ion-list> -->
-
-  <ion-item-group>
-      <ion-item-divider color="light">Dispositivos MQTT</ion-item-divider>
-      <ion-item *ngFor="let dispMQTT of listaDispositivosMQTT">
-        {{ dispMQTT.Nome }}
-      </ion-item>
-
-      <ion-item-divider color="light">Dispositivos bluetooth</ion-item-divider>
-      <ion-item *ngFor="let dispBT of listaDispositivosBluetooth">
-          {{ dispBT.Nome }}
-      </ion-item>
-    </ion-item-group>
-
+  <ion-item-group *ngIf="CasaAtual != null && CasaAtual.Comodos != null">
+    <ng-container *ngFor="let comodo of CasaAtual.Comodos">
+      <ion-item-divider color="light">{{ comodo.Nome }}</ion-item-divider>
+      <ng-container *ngIf="comodo.Dispositivos != null" >
+        <ion-item *ngFor="let disp of comodo.Dispositivos">
+          {{ disp.Nome }}
+        </ion-item>
+      </ng-container>
+    </ng-container>
+  </ion-item-group>
   <ion-fab bottom right>
     <button ion-fab (click)="adicionarDispositivo()">
       <ion-icon name="add"></ion-icon>

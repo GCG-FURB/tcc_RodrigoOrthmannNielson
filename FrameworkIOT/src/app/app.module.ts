@@ -1,3 +1,5 @@
+import { MeusComodosPage } from './../pages/meus-comodos/meus-comodos';
+import { MinhasCasasPage } from './../pages/minhas-casas/minhas-casas';
 import { TelaControlePage } from './../pages/tela-controle/tela-controle';
 import { ConfiguracoesPage } from './../pages/configuracoes/configuracoes';
 import { AdicionarDispositivoMqttPage } from './../pages/adicionar-dispositivo-mqtt/adicionar-dispositivo-mqtt';
@@ -32,6 +34,9 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { DispositivosFirebaseProvider } from '../providers/dispositivos-firebase/dispositivos-firebase';
 import { ConfiguracaoMqttProvider } from '../providers/configuracao-mqtt/configuracao-mqtt';
 import { AdicionarDispositivoBluetoothPage } from '../pages/adicionar-dispositivo-bluetooth/adicionar-dispositivo-bluetooth';
+import { ComodosFirebaseProvider } from '../providers/comodos-firebase/comodos-firebase';
+import { CasasFirebaseProvider } from '../providers/casas-firebase/casas-firebase';
+import { UsuariosFirebaseProvider } from '../providers/usuarios-firebase/usuarios-firebase';
 
 @NgModule({
   declarations: [
@@ -44,7 +49,9 @@ import { AdicionarDispositivoBluetoothPage } from '../pages/adicionar-dispositiv
     AdicionarDispositivoMqttPage,
     AdicionarDispositivoBluetoothPage,
     ConfiguracoesPage,
-    TelaControlePage
+    TelaControlePage,
+    MinhasCasasPage,
+    MeusComodosPage
   ],
   imports: [
     BrowserModule,
@@ -65,7 +72,9 @@ import { AdicionarDispositivoBluetoothPage } from '../pages/adicionar-dispositiv
     AdicionarDispositivoMqttPage,
     AdicionarDispositivoBluetoothPage,
     ConfiguracoesPage,
-    TelaControlePage
+    TelaControlePage,
+    MinhasCasasPage,
+    MeusComodosPage
   ],
   providers: [
     BluetoothSerial,
@@ -77,7 +86,10 @@ import { AdicionarDispositivoBluetoothPage } from '../pages/adicionar-dispositiv
     AngularFireAuth,
     AutenticacaoProvider,
     DispositivosFirebaseProvider,
-    ConfiguracaoMqttProvider
+    ConfiguracaoMqttProvider,
+    ComodosFirebaseProvider,
+    CasasFirebaseProvider,
+    UsuariosFirebaseProvider
   ]
 })
 export class AppModule { }

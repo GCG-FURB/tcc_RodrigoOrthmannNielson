@@ -1,18 +1,18 @@
-<!--
-  Generated template for the MeusComodosPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
-
-  <ion-navbar>
-    <ion-title>MeusComodos</ion-title>
-  </ion-navbar>
-
+  <cabecalho-customizado [titulo]="'Cômodos'"></cabecalho-customizado>
 </ion-header>
 
 
 <ion-content padding>
+  <ion-list *ngIf="CasaAtual != null && CasaAtual.Comodos != null">
+    <ion-item *ngFor="let comodo of CasaAtual.Comodos">
+      {{ comodo.Nome }}
+    </ion-item>
+  </ion-list>
 
+  <ion-fab bottom right>
+    <button ion-fab (click)="adicionarComodo()">
+      <ion-icon name="add"></ion-icon>
+    </button>
+  </ion-fab>
 </ion-content>

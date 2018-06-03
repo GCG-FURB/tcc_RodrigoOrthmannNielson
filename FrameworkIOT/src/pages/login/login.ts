@@ -1,3 +1,4 @@
+import { TelaControlePage } from './../tela-controle/tela-controle';
 
 import { AutenticacaoProvider } from './../../providers/autenticacao/autenticacao';
 import { Component } from '@angular/core';
@@ -44,14 +45,15 @@ export class LoginPage {
       email: data.email,
       password: data.password
     };
+    
     this.auth.loginEmail(credentials)
       .then(
-        () => this.navCtrl.setRoot(HomePage),
+        () => this.navCtrl.setRoot(TelaControlePage),
         error => this.loginError = error.message
       );
   }
 
-  signup(){
+  signup() {
     this.navCtrl.push(CadastroUsuarioPage);
   }
 }
