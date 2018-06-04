@@ -1,5 +1,9 @@
+import { UsuariosFirebaseProvider } from './../usuarios-firebase/usuarios-firebase';
+import { AutenticacaoProvider } from './../autenticacao/autenticacao';
+import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Comodo } from 'fwiotfurb';
 
 /*
   Generated class for the ComodosFirebaseProvider provider.
@@ -10,8 +14,10 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class ComodosFirebaseProvider {
 
-  constructor(public http: HttpClient) {
-    console.log('Hello ComodosFirebaseProvider Provider');
+  private Casas: AngularFireList<Comodo>;
+
+  constructor(private db: AngularFireDatabase, private auth: AutenticacaoProvider, private usr: UsuariosFirebaseProvider) {
+    //this.Casas = this.db.list<Comodo>("casas/" + usr.. "comodos");
   }
 
 }

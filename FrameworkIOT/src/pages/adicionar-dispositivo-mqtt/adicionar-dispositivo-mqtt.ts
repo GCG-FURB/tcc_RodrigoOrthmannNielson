@@ -1,3 +1,4 @@
+import { AutenticacaoProvider } from './../../providers/autenticacao/autenticacao';
 import { CasasFirebaseProvider } from './../../providers/casas-firebase/casas-firebase';
 import { DispositivosFirebaseProvider } from './../../providers/dispositivos-firebase/dispositivos-firebase';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -33,7 +34,8 @@ export class AdicionarDispositivoMqttPage {
     private alertCtrl: AlertController,
     private usuarioDb: UsuariosFirebaseProvider,
     private loadingCtrl: LoadingController,
-    private casaDb: CasasFirebaseProvider
+    private casaDb: CasasFirebaseProvider,
+    private auth: AutenticacaoProvider
   ) {
     this.formulario = this.formBuilder.group({
       nome: ['', Validators.required],
@@ -43,9 +45,9 @@ export class AdicionarDispositivoMqttPage {
     });
 
 
-    this.usuarioDb.obterCasaAtual().subscribe(casa => {
+    auth.adicionarInscricao(this.usuarioDb.obterCasaAtual().subscribe(casa => {
       this.CasaAtual = casa;
-    })
+    }));
   }
 
   obterListaComodosPrompt(): Array<AlertInputOptions> {

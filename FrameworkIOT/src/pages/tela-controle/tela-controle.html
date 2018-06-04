@@ -4,14 +4,15 @@
 
 
 <ion-content padding>
-	<ion-list>
-		<ion-item *ngFor="let dispMQTT of listaDispositivosMQTT;let index = index;trackBy:trackByIndex">
-			<ion-label>{{dispMQTT.Nome}}</ion-label>
-			<ion-toggle [(ngModel)]="listaEstadoDispositivosMQTT[index]" (ionChange)="mudarEstado(dispMQTT)"></ion-toggle>
-		</ion-item>
-		<ion-item *ngFor="let dispBT of listaDispositivosBluetooth;let index = index;trackBy:trackByIndex">
-			<ion-label>{{dispBT.Nome}}</ion-label>
-			<ion-toggle [(ngModel)]="listaEstadoDispositivosBluetooth[index]" (ionChange)="mudarEstado(dispBT)" ></ion-toggle>
-		</ion-item>
-	</ion-list>
+	<ion-item-group *ngIf="CasaAtual != null && CasaAtual.Comodos != null && casaEstados != null">
+		<ng-container *ngFor="let comodo of CasaAtual.Comodos;let i = index;trackBy:trackByIndex">
+			<ion-item-divider color="light">{{ comodo.Nome }}</ion-item-divider>
+			<ng-container *ngIf="comodo.Dispositivos != null && casaEstados[i] != null">
+				<ion-item *ngFor="let disp of comodo.Dispositivos; let j = index;trackBy:trackByIndex">
+					<ion-label>{{ disp.Nome }}</ion-label>
+					<ion-toggle [(ngModel)]="(casaEstados[i])[j]" (click)="mudarEstado(disp, comodo)"></ion-toggle>
+				</ion-item>
+			</ng-container>
+		</ng-container>
+	</ion-item-group>
 </ion-content>

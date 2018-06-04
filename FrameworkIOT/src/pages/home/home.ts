@@ -1,3 +1,4 @@
+import { UsuariosFirebaseProvider } from './../../providers/usuarios-firebase/usuarios-firebase';
 import { ConfiguracaoMQTT, FwMqttProvider, FwBluetoothProvider, DispositivoBluetooth } from 'fwiotfurb';
 import { Component } from '@angular/core';
 import { NavController, Platform, Toggle } from 'ionic-angular';
@@ -11,7 +12,9 @@ import { BluetoothSerial } from '@ionic-native/bluetooth-serial';
 })
 export class HomePage {
 
-  constructor() {
+  constructor(
+    private usuarioDb: UsuariosFirebaseProvider,
+  ) {
   }
 }
 

@@ -1,8 +1,9 @@
+import { CasasFirebaseProvider } from './../../providers/casas-firebase/casas-firebase';
 import { UsuariosFirebaseProvider } from './../../providers/usuarios-firebase/usuarios-firebase';
 import { AutenticacaoProvider } from './../../providers/autenticacao/autenticacao';
 import { ConfiguracaoMqttProvider } from './../../providers/configuracao-mqtt/configuracao-mqtt';
 import { DispositivosFirebaseProvider } from './../../providers/dispositivos-firebase/dispositivos-firebase';
-import { DispositivoMQTT, DispositivoBluetooth, Dispositivo, ConfiguracaoMQTT, FwMqttProvider, FwBluetoothProvider, ComandoONOFF } from 'fwiotfurb';
+import { DispositivoMQTT, DispositivoBluetooth, Dispositivo, ConfiguracaoMQTT, FwMqttProvider, FwBluetoothProvider, ComandoONOFF, Casa, Comodo } from 'fwiotfurb';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, LoadingController, Loading } from 'ionic-angular';
 
@@ -25,11 +26,14 @@ export class TelaControlePage {
   listaEstadoDispositivosMQTT: Array<boolean>;
   listaDispositivosBluetooth: Array<Dispositivo>;
   listaEstadoDispositivosBluetooth: Array<boolean>;
+  casaEstados: Array<Array<boolean>>;
   configuracaoMQTT: ConfiguracaoMQTT;
 
   public testes: number = 0;
   public statusConexao: number = 0;
   public loading: Loading;
+  public loadingConfig: Loading;
+  public CasaAtual: Casa;
 
   constructor(
     public navCtrl: NavController,
@@ -41,42 +45,58 @@ export class TelaControlePage {
     public configMQTT: ConfiguracaoMqttProvider,
     private auth: AutenticacaoProvider,
     public loadingCtrl: LoadingController,
-    public dbUsuarios: UsuariosFirebaseProvider
+    public dbUsuarios: UsuariosFirebaseProvider,
+    private casaDb: CasasFirebaseProvider
   ) {
-    this.listaDispositivosMQTT = new Array<Dispositivo>();
-      this.listaEstadoDispositivosMQTT = new Array<boolean>();
-      this.listaDispositivosBluetooth = new Array<Dispositivo>();
-      this.listaEstadoDispositivosBluetooth = new Array<boolean>();
-    // auth.adicionarInscricao(this.dbDispositivos.ObterMeusDispositivos().subscribe(dispositivos => {
-    //   this.listaDispositivosMQTT = new Array<Dispositivo>();
-    //   this.listaEstadoDispositivosMQTT = new Array<boolean>();
-    //   this.listaDispositivosBluetooth = new Array<Dispositivo>();
-    //   this.listaEstadoDispositivosBluetooth = new Array<boolean>();
+    this.loadingConfig = this.loadingCtrl.create({
+      content: "Carregando configurações"
+    });
 
-    //   dispositivos.forEach(disp => {
-    //     if (disp.TipoDispositivo == "DispositivoMQTT") {
-    //       this.listaDispositivosMQTT.push(disp);
-    //       this.listaEstadoDispositivosMQTT.push(disp.Estado == (disp.ComandoDispositivo as ComandoONOFF).ON)
-    //     } else if (disp.TipoDispositivo == "DispositivoBluetooth") {
-    //       this.listaDispositivosBluetooth.push(disp);
-    //       this.listaEstadoDispositivosBluetooth.push(disp.Estado == (disp.ComandoDispositivo as ComandoONOFF).ON)
-    //     }
-    //   });
-    // }));
+    this.loadingConfig.present();
+    this.timeoutInicializacao();
 
-    // auth.adicionarInscricao(configMQTT.ObterConfiguracao().subscribe(configuracao => {
-    //   this.configuracaoMQTT = configuracao;
-    //   if (this.configuracaoMQTT != null) {
-    //     this.loading = this.loadingCtrl.create({
-    //       content: 'Conectando ao MQTT'
-    //     });
-    //     if (!this.fwMqtt.clienteConectado()) {
-    //       this.loading.present();
-    //       this.fwMqtt.configurarMQTT(this.configuracaoMQTT);
-    //       this.timeoutConexaoMQTT();
-    //     }
-    //   }
-    // }));
+    auth.adicionarInscricao(configMQTT.ObterConfiguracao().subscribe(configuracao => {
+      this.configuracaoMQTT = configuracao;
+      if (this.configuracaoMQTT != null) {
+        this.loading = this.loadingCtrl.create({
+          content: 'Conectando ao MQTT'
+        });
+        if (!this.fwMqtt.clienteConectado()) {
+          this.loading.present();
+          this.fwMqtt.configurarMQTT(this.configuracaoMQTT);
+          this.timeoutConexaoMQTT();
+        }
+      }
+    }));
+  }
+
+  inicializacaoCasa() {
+    this.auth.adicionarInscricao(this.dbUsuarios.obterCasaAtual().subscribe(casa => {
+      this.CasaAtual = casa;
+      this.casaEstados = new Array<Array<boolean>>();
+      if (casa != null && casa.Comodos != null) {
+        this.CasaAtual.Comodos.forEach(comodo => {
+          let arrayDisp = new Array<boolean>();
+          if (comodo.Dispositivos != null) {
+            comodo.Dispositivos.forEach(dispositivo => {
+              arrayDisp.push(dispositivo.Estado == (dispositivo.ComandoDispositivo as ComandoONOFF).ON)
+            });
+          }
+          this.casaEstados.push(arrayDisp);
+        });
+      }
+      this.loadingConfig.dismiss();
+    }));
+  }
+
+  timeoutInicializacao() {
+    setTimeout(() => {
+      if (!this.dbUsuarios.inicializou()) {
+        this.timeoutInicializacao();
+      } else {
+        this.inicializacaoCasa();
+      }
+    }, 1000);
   }
 
   timeoutConexaoMQTT() {
@@ -93,7 +113,8 @@ export class TelaControlePage {
     return index;
   }
 
-  mudarEstado(dispositivo: DispositivoMQTT | DispositivoBluetooth) {
+  mudarEstado(dispositivo: DispositivoMQTT | DispositivoBluetooth, comodo: Comodo) {
+    console.log('AAA');
     if (dispositivo.TipoDispositivo == "DispositivoMQTT") {
       let dispositivoMqtt = dispositivo as DispositivoMQTT;
       let comandoONOFF = dispositivo.ComandoDispositivo as ComandoONOFF;
@@ -104,9 +125,7 @@ export class TelaControlePage {
         this.fwMqtt.publicar(comandoONOFF.OFF, dispositivoMqtt.TopicoPublicacao);
         dispositivoMqtt.Estado = comandoONOFF.OFF;
       }
-      let index = this.listaDispositivosMQTT.indexOf(dispositivoMqtt);
-      this.listaEstadoDispositivosMQTT[index] = dispositivoMqtt.Estado == comandoONOFF.ON;
-      this.dbDispositivos.AtualizarEstadoDispositivo(dispositivoMqtt);
+      this.casaDb.atualizarDadosCasa(this.CasaAtual);
     } else if (dispositivo.TipoDispositivo == "DispositivoBluetooth") {
       this.fwBluetooth.ativarBluetooth().then(() => {
         let dispositivoBluetooth = dispositivo as DispositivoBluetooth;
@@ -118,9 +137,7 @@ export class TelaControlePage {
           this.fwBluetooth.conectaEnviaMensagemDispositivo(comandoONOFF.OFF, dispositivoBluetooth.EnderecoMAC);
           dispositivoBluetooth.Estado = comandoONOFF.OFF;
         }
-        let index = this.listaDispositivosBluetooth.indexOf(dispositivoBluetooth);
-        this.listaEstadoDispositivosBluetooth[index] = dispositivoBluetooth.Estado == comandoONOFF.ON;
-        this.dbDispositivos.AtualizarEstadoDispositivo(dispositivoBluetooth);
+        this.casaDb.atualizarDadosCasa(this.CasaAtual);
       })
     }
   }

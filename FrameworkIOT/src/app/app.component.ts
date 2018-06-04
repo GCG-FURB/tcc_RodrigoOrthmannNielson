@@ -1,3 +1,4 @@
+import { HomePage } from './../pages/home/home';
 import { MeusComodosPage } from './../pages/meus-comodos/meus-comodos';
 import { MinhasCasasPage } from './../pages/minhas-casas/minhas-casas';
 import { TelaControlePage } from './../pages/tela-controle/tela-controle';
@@ -9,7 +10,6 @@ import { Platform, Nav, MenuController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { LoginPage } from '../pages/login/login';
-import { HomePage } from '../pages/home/home';
 
 @Component({
   templateUrl: 'app.html'

@@ -1,7 +1,10 @@
+import { CasasFirebaseProvider } from './../../providers/casas-firebase/casas-firebase';
+import { UsuariosFirebaseProvider } from './../../providers/usuarios-firebase/usuarios-firebase';
+import { AutenticacaoProvider } from './../../providers/autenticacao/autenticacao';
 import { DispositivosFirebaseProvider } from './../../providers/dispositivos-firebase/dispositivos-firebase';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform, AlertController, LoadingController } from 'ionic-angular';
-import { FwBluetoothProvider, DispositivoBluetooth, ComandoONOFF } from 'fwiotfurb';
+import { FwBluetoothProvider, DispositivoBluetooth, ComandoONOFF, Casa, Comodo, Dispositivo } from 'fwiotfurb';
 import { AlertInputOptions } from 'ionic-angular/components/alert/alert-options';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
@@ -23,6 +26,8 @@ export class AdicionarDispositivoBluetoothPage {
   public listaDispositivosNaoPareados: Array<DispositivoBluetooth>;
   public formulario: FormGroup;
   public macNovoDispositivo: string;
+  public CasaAtual: Casa;
+  public ComodoSelecionado: Comodo;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -32,13 +37,20 @@ export class AdicionarDispositivoBluetoothPage {
     private platform: Platform,
     private alertCtrl: AlertController,
     public loadingCtrl: LoadingController,
-    public dbDispositivo: DispositivosFirebaseProvider
+    public dbDispositivo: DispositivosFirebaseProvider,
+    private auth: AutenticacaoProvider,
+    private usuarioDb: UsuariosFirebaseProvider,
+    private casaDb: CasasFirebaseProvider
   ) {
     this.formulario = this.formBuilder.group({
       nome: ['', Validators.required],
       comandoON: ['', Validators.required],
       comandoOFF: ['', Validators.required]
     });
+
+    auth.adicionarInscricao(this.usuarioDb.obterCasaAtual().subscribe(casa => {
+      this.CasaAtual = casa;
+    }));
 
     let loading = this.loadingCtrl.create({
       content: 'Ativando o bluetooth'
@@ -73,19 +85,63 @@ export class AdicionarDispositivoBluetoothPage {
     });
   }
 
+  obterListaComodosPrompt(): Array<AlertInputOptions> {
+    let listaInputs: Array<AlertInputOptions> = new Array<AlertInputOptions>();
+
+    if (this.CasaAtual != null && this.CasaAtual.Comodos != null) {
+      this.CasaAtual.Comodos.forEach(comodo => {
+        let input: AlertInputOptions = {
+          type: 'radio',
+          label: comodo.Nome,
+          value: comodo.Id
+        }
+        listaInputs.push(input)
+      });
+    }
+    return listaInputs;
+  }
+
   adicionarDispositivo() {
     if (this.macNovoDispositivo != undefined && this.macNovoDispositivo != null && this.macNovoDispositivo != "") {
       let { nome, comandoON, comandoOFF } = this.formulario.controls;
-      this.dbDispositivo.AdicionarDispositivo(
-        new DispositivoBluetooth(
-          "0",
-          nome.value,
-          new ComandoONOFF(ComandoONOFF.name, comandoON.value, comandoOFF.value),
-          comandoOFF.value,
-          DispositivoBluetooth.name,
-          this.macNovoDispositivo
-        )
-      );
+      this.alertCtrl.create({
+        title: "Novo Dispositivo bluetooth",
+        message: "Selecione um cômodo para este dispositivo",
+        inputs: this.obterListaComodosPrompt(),
+        buttons: [
+          {
+            text: 'Cancelar',
+          },
+          {
+            text: 'Confirmar',
+            handler: data => {
+              let comodo = this.CasaAtual.Comodos.find(c => c.Id == data);
+              if (comodo.Dispositivos == null) {
+                comodo.Dispositivos = new Array<Dispositivo>();
+              }
+              comodo.Dispositivos.push(
+                new DispositivoBluetooth(
+                  "0",
+                  nome.value,
+                  new ComandoONOFF(ComandoONOFF.name, comandoON.value, comandoOFF.value),
+                  comandoOFF.value,
+                  DispositivoBluetooth.name,
+                  this.macNovoDispositivo
+                ));
+              this.casaDb.atualizarDadosCasa(this.CasaAtual);
+              this.alertCtrl.create({
+                message: "Dispositivo bluetooth adicionado",
+                buttons: [{
+                  text: "OK",
+                  handler: () => {
+                    this.navCtrl.pop();
+                  }
+                }]
+              }).present();
+            }
+          }
+        ]
+      }).present();
     }
   }
 

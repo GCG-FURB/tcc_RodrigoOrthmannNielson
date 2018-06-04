@@ -32,8 +32,8 @@ export class UsuariosFirebaseProvider {
     this.Usuario.update(this.UsuarioObj);
   }
 
-  public adicionarDispositivo(casa: Casa, comodo: Comodo, dispositivo: Dispositivo) {
-
+  public inicializou(): boolean {
+    return this.CasaUsuarioAtual != null;
   }
 
   /**
@@ -82,11 +82,6 @@ export class UsuariosFirebaseProvider {
    * Obtém a casa atual do usuário
    */
   public obterCasaAtual(): Observable<Casa> {
-    // return new Promise(resolve => {
-    //   this.auth.adicionarInscricao(this.Usuario.valueChanges().subscribe(usuario => {
-    //     resolve(this.casaDb.obterCasas([usuario.CasaAtual]));
-    //   }))
-    // });
     return this.CasaUsuarioAtual.valueChanges();
   }
 
