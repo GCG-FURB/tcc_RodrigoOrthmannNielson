@@ -8,6 +8,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { ConfiguracaoMqttProvider } from '../../providers/configuracao-mqtt/configuracao-mqtt';
 import { UsuariosFirebaseProvider } from '../../providers/usuarios-firebase/usuarios-firebase';
+import { MeusComodosPage } from '../meus-comodos/meus-comodos';
 
 /**
  * Generated class for the MeusDispositivosPage page.
@@ -66,6 +67,24 @@ export class MeusDispositivosPage {
         ]
       });
       alertaConfiguracao.present();
+    }
+    else if (this.CasaAtual == null || this.CasaAtual.Comodos == null) {
+      let alertaComodos = this.alertCtrl.create({
+        title: 'Atenção',
+        message: 'Não existe nenhum cômodo para essa casa. Deseja adicionar um?',
+        buttons: [
+          {
+            text: 'Sim',
+            handler: () => {
+              this.navCtrl.setRoot(MeusComodosPage);
+            }
+          },
+          {
+            text: 'Não',
+          }
+        ]
+      });
+      alertaComodos.present();
     }
     else {
       let promptDispositivo = this.alertCtrl.create({

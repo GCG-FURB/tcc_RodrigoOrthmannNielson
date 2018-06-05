@@ -4,13 +4,13 @@
 
 
 <ion-content padding>
-	<ion-item-group *ngIf="CasaAtual != null && CasaAtual.Comodos != null && casaEstados != null">
-		<ng-container *ngFor="let comodo of CasaAtual.Comodos;let i = index;trackBy:trackByIndex">
+	<ion-item-group *ngIf="CasaAtual != null && ListaComodos != null && casaEstados != null">
+		<ng-container *ngFor="let comodo of ListaComodos;let i = index;trackBy:trackByIndex">
 			<ion-item-divider color="light">{{ comodo.Nome }}</ion-item-divider>
 			<ng-container *ngIf="comodo.Dispositivos != null && casaEstados[i] != null">
 				<ion-item *ngFor="let disp of comodo.Dispositivos; let j = index;trackBy:trackByIndex">
 					<ion-label>{{ disp.Nome }}</ion-label>
-					<ion-toggle [(ngModel)]="(casaEstados[i])[j]" (click)="mudarEstado(disp, comodo)"></ion-toggle>
+					<ion-toggle [(ngModel)]="(casaEstados[i])[j]" (ionChange)="mudarEstado(disp, comodo)"></ion-toggle>
 				</ion-item>
 			</ng-container>
 		</ng-container>
