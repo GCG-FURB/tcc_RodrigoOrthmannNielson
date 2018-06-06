@@ -99,7 +99,7 @@ Este método faz a configuração e conecta em um broker MQTT.
       }
     };
 
-    this.fwComunicacao.fwMQTT.configurarMQTT(configuracao);
+    this.fwMQTT.configurarMQTT(configuracao);
 ```
 
 ### desconectar()
@@ -237,7 +237,7 @@ Lista os dispositivos não pareados com o celular.
 :::typescript
 	let listaDispositivosNaoPareados:  Array<DispositivoBluetooth> = new Array<DispositivoBluetooth>();
 	
-    	this.fwComunicacao.fwBluetooth.listarDispositivosNaoPareados()
+    	this.fwBluetooth.listarDispositivosNaoPareados()
       	.then((dispositivos) => listaDispositivosNaoPareados = dispositivos);
 ```
 
